@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>css编码规范 | 叉烧的诞生</title>
+  <meta name="description" content="my blogs" />
+  <meta name="keywords" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="shortcut icon" href="/">
+  <link rel="alternate" href="/atom.xml" title="叉烧的诞生">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <link rel="shortcut icon" href="" />
+  <link rel="icon" href="" />
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href='//cdn.bootcss.com/node-waves/0.7.5/waves.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="/style.css">
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+</head>
+
+<body>
+    <div id="loading-bar-wrapper">
+  <div id="loading-bar"></div>
+</div>
+
+
+    <script>setLoadingBarProgress(20)</script>
+    <header class="l_header">
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+			<a class="logo flat-box" href='/' >
+				<!-- <i class="fa fa-home"></i> -->
+				叉烧的诞生
+			</a>
+
+				<div class='menu'>
+					<ul class='h-list'>
+                        
+    						
+    							<li>
+    								<a class='nav-about flat-box' href='/'>
+    									<i class='fa fa-home fa-'></i>&nbsp;主页
+    								</a>
+    							</li>
+    						
+    							<li>
+    								<a class='nav-projects flat-box' href='https://xaoxuu.com/proj'>
+    									<i class='fa fa-cube fa-'></i>&nbsp;项目
+    								</a>
+    							</li>
+    						
+    							<li>
+    								<a class='nav-home flat-box' href='/'>
+    									<i class='fa fa-rss fa-'></i>&nbsp;博客
+    								</a>
+    							</li>
+    						
+    							<li>
+    								<a class='nav-archives flat-box' href='/archives'>
+    									<i class='fa fa-archive fa-'></i>&nbsp;归档
+    								</a>
+    							</li>
+    						
+        			 
+					</ul>
+					<div class='underline'></div>
+				</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="Search" />
+						<span class="icon"><i class="fa fa-search fa-fw"></i></span>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fa fa-search fa-fw" href='javascript:void(0)'></span></a></li>
+				
+				<li class='s-menu'><a class="fa fa-navicon fa-fw" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo" class="flat-box" href='javascript:void(0)'>
+				ssza02
+			</a>
+
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="fa fa-comments fa-fw flat-box" href='javascript:void(0)'></a></li>
+				<li class='s-top'><a class="fa fa-arrow-up fa-fw flat-box" href='javascript:void(0)'></a></li>
+				<li class='s-toc'><a class="fa fa-list-ul fa-fw flat-box" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+        <div class="header">叉烧的诞生</div>
+		<nav>
+            <ul>
+                
+                    
+                        <li>
+                            <a class='nav-about flat-box nav flat-box' href='/'><i class='fa fa-home fa-fw'></i>&nbsp;主页</a>
+                        </li>
+                    
+                        <li>
+                            <a class='nav-projects flat-box nav flat-box' href='https://xaoxuu.com/proj'><i class='fa fa-cube fa-fw'></i>&nbsp;项目</a>
+                        </li>
+                    
+                        <li>
+                            <a class='nav-home flat-box nav flat-box' href='/'><i class='fa fa-rss fa-fw'></i>&nbsp;博客</a>
+                        </li>
+                    
+                        <li>
+                            <a class='nav-archives flat-box nav flat-box' href='/archives'><i class='fa fa-archive fa-fw'></i>&nbsp;归档</a>
+                        </li>
+                    
+             
+            </ul>
+		</nav>
+	</aside>
+
+    <script>setLoadingBarProgress(40);</script>
+    <div class="l_body">
+    <div class='container clearfix'>
+        <div class='l_main'>
+            <article id="post-css编码规范" class="post white-box article-type-post" itemscope itemprop="blogPost">
+    <section class='meta'>
+        <h1 class="title">
+            
+                css编码规范
+            
+        </h1>
+        <time>
+            2018-10-07&nbsp;&nbsp;
+            <i class="fa fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+        </time>
+        
+    
+    <div class='cats'>
+        <a href="/categories/css/">css</a>
+    </div>
+
+
+    </section>
+
+    <section class="article typo">
+
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="页面结构"><a href="#页面结构" class="headerlink" title="页面结构"></a>页面结构</h2><ul>
+<li>容器: container</li>
+<li>页头：header</li>
+<li>内容：content/container</li>
+<li>页面主体：main</li>
+<li>页尾：footer</li>
+<li>导航：nav</li>
+<li>侧栏：sidebar</li>
+<li>栏目：column</li>
+<li>页面外围控制整体布局宽度：wrapper</li>
+<li>左右中：left right center</li>
+</ul>
+<h2 id="导航"><a href="#导航" class="headerlink" title="导航"></a>导航</h2><ul>
+<li>导航：nav</li>
+<li>主导航：mainbav</li>
+<li>子导航：subnav</li>
+<li>顶导航：topnav</li>
+<li>边导航：sidebar</li>
+<li>左导航：leftsidebar</li>
+<li>右导航：rightsidebar</li>
+<li>菜单：menu</li>
+<li>子菜单：submenu</li>
+<li>标题: title</li>
+<li>摘要: summary</li>
+</ul>
+<a id="more"></a>
+<h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><ul>
+<li>标志：logo</li>
+<li>广告：banner</li>
+<li>登陆：login</li>
+<li>登录条：loginbar</li>
+<li>注册：regsiter</li>
+<li>搜索：search</li>
+<li>功能区：shop</li>
+<li>标题：title</li>
+<li>加入：joinus</li>
+<li>状态：status</li>
+<li>按钮：btn</li>
+<li>滚动：scroll</li>
+<li>标签页：tab</li>
+<li>文章列表：list</li>
+<li>提示信息：msg</li>
+<li>当前的: current</li>
+<li>小技巧：tips</li>
+<li>图标: icon</li>
+<li>注释：note</li>
+<li>指南：guild</li>
+<li>服务：service</li>
+<li>热点：hot</li>
+<li>新闻：news</li>
+<li>下载：download</li>
+<li>投票：vote</li>
+<li>合作伙伴：partner</li>
+<li>友情链接：link</li>
+<li>版权：copyright</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">1. 内容优先,表现为辅</span><br><span class="line">  2. css命名中英文对照</span><br><span class="line">  current 当前    hover 悬停    selected 挑选   disabled 禁用   focus 得到焦点    blur 失去焦点   checked 勾选    success 成功    error 出错</span><br><span class="line"></span><br><span class="line">  header(hd) 头部   content(cnt) 内容   title(tit) 标题   item 项目（条）    cell 单元   image/pic(img) 图片   text(txt) 文字    top 顶部    scrubber 时序菜单</span><br><span class="line"></span><br><span class="line">  nav 导航    mainbav 主导航   subnav 子导航    topnav 顶部导航   breadcrumb 面包屑导航</span><br><span class="line"></span><br><span class="line">  flink 友情链接    footer 尾    copyright 版权</span><br><span class="line"></span><br><span class="line">  menu 菜单   submenu 子菜单   dropdown 下拉菜单</span><br><span class="line"></span><br><span class="line">  searchBar 搜索条   search 搜索条    searchTxt 搜索框   searchBtn 搜索按钮    search_key 搜索词</span><br><span class="line"></span><br><span class="line">  member 会员   ucenter 用户中心    loginBar 登陆条    login 登录    loginBtn 登录按钮   regsiter 注册按钮   btn-regsiter注册按钮    name 用户名    password 密码   nickname 昵称   mobilephone/mobile 手机    telephone/tel 电话   defaultavatar 默认头像</span><br><span class="line"></span><br><span class="line">  hot 热点    news 新闻   banner/AD 广告    download 下载</span><br><span class="line"></span><br><span class="line">  content 内容    title 标题    summary 摘要    time 时间</span><br><span class="line"></span><br><span class="line">  share 分享    digg 顶    like 喜欢</span><br><span class="line"></span><br><span class="line">  list 列表   pList 图片列表    tList 文字列表    tpList 图文列表</span><br><span class="line"></span><br><span class="line">  table 表格    row 行   column 列    gutter 间隔   viewport 视口</span><br><span class="line"></span><br><span class="line">  tab 标签    tags 标签   scroll 滚动</span><br><span class="line"></span><br><span class="line">  sidebar 侧边栏   column 栏目   section 区块    msg 提示信息    status 状态   vote 投票   tips 小技巧    guild 指南    note 注释</span><br><span class="line"></span><br><span class="line">  icon- 图标    btn- 按钮</span><br><span class="line"></span><br><span class="line">  goods 商品    goodsList 商品列表    goodsDetail 商品详情    goodsInfo 商品信息</span><br><span class="line"></span><br><span class="line">  tuan 团购   tuanList 团购列表   tuanDetail  团购详情    tuanInfo 团购信息</span><br><span class="line"></span><br><span class="line">  transition 动画   shadow 阴影   fade 淡入淡出   flip 翻页效    slide 滑动    slideup 上滑动   slidedown 下滑动   turn 翻页   horizontal 水平   vertical 垂直   collapsible 折叠    corners 拐角    flow 流    reverse 反向    pop 弹窗</span><br><span class="line"></span><br><span class="line">  count 总数/计数   plus 加号/正   minus 减号/负    controlgroup 控制组</span><br></pre></td></tr></table></figure>
+<h2 id="样式文件命名"><a href="#样式文件命名" class="headerlink" title="样式文件命名"></a>样式文件命名</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">　　主要的:master.css</span><br><span class="line">　　布局版面:layout.css</span><br><span class="line">　　专栏:columns.css</span><br><span class="line">　　文字:font.css</span><br><span class="line">　　打印样式:print.css</span><br><span class="line">　　主题:themes.css</span><br><span class="line">说明：均为class，需要扩展，则在当前命名内以“_“(下划线)后缀自定名称。</span><br><span class="line">我习惯称列表页为list，新闻列表则为newslist，图片列表为piclist，</span><br><span class="line">内容页为view，</span><br><span class="line">/**/</span><br><span class="line">整体大框架：#wrapper</span><br><span class="line">大框架内：#inwrapper</span><br><span class="line">/////////////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">顶部及banner：.top</span><br><span class="line">顶部及banner内：.intop</span><br><span class="line">Logo：.logo</span><br><span class="line">Banner：.banner</span><br><span class="line">导航：.menu</span><br><span class="line">导航内：.inmenu</span><br><span class="line">        .Menuul</span><br><span class="line">        .Menuul li</span><br><span class="line">        .Menuul li a</span><br><span class="line">下拉菜单：.inmenu_xiala</span><br><span class="line">          .Inmenu_xialaul</span><br><span class="line">          .Inmenu_xialaul li</span><br><span class="line">          .Inmenu_xialaul li a</span><br><span class="line">///////////////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">主体内容：.mainWrapper</span><br><span class="line">主体内容内：.inmainwrapper</span><br><span class="line">左侧拦：.sideleft</span><br><span class="line">左侧内：.insideleft</span><br><span class="line">右侧栏：.sideright</span><br><span class="line">右侧内：.insideright</span><br><span class="line">中间：.sidecenter</span><br><span class="line">中间内：.insidecenter</span><br><span class="line">/////////////////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">底部：.foot</span><br><span class="line">底部内：.infoot</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">/*其他命名*/</span><br><span class="line">搜索：.search</span><br><span class="line">搜索内：.insearch</span><br><span class="line">搜索条：.searchselect</span><br><span class="line">搜索按钮：.serachbuttom</span><br><span class="line">输入文本框：.input</span><br><span class="line">.select</span><br><span class="line">/*表格样式*/</span><br><span class="line">表格整体框架：.listbox</span><br><span class="line">表格的宽度：.listbox-table</span><br><span class="line">表格头部文字样式：.listbox-header</span><br><span class="line">表格正文文字样式：.listbox-entry</span><br><span class="line">/*通用型*/</span><br><span class="line">通用：.GM/*这个有点郁闷,英文太差...*/</span><br><span class="line">通用内：.INGM</span><br><span class="line">通用左浮动：.GMfl(GM FLOAT LEFT)</span><br><span class="line">通用右浮动：.GMfr(GM FLOAT RIGHT)</span><br><span class="line">/*通用图片样式*/</span><br><span class="line">通用图片样式：.img</span><br><span class="line">/*清除浮动*/</span><br><span class="line">清除所有浮动：.clear</span><br><span class="line">清除左侧浮动：.clearleft</span><br><span class="line">清除右侧浮动：.clearright</span><br><span class="line">/*文字样式*/</span><br><span class="line">文字：.font</span><br><span class="line">/*新闻列表*/</span><br><span class="line">新闻列表：.fontnews</span><br><span class="line">/*View页字体总样式*/</span><br><span class="line">VIEW页字体：.fontview</span><br></pre></td></tr></table></figure>
+
+        </div>
+
+        
+            <div class="article-tags tags">
+                
+                    <a href="/tags/css/"><i class="fa fa-tag fa-fw" aria-hidden="true"></i>&nbsp;css</a>
+                
+            </div>
+        
+
+        
+            <div class="prev-next">
+                
+                
+                    <section class="next">
+                        <span class="art-item-right" aria-hidden="true">
+                            <h6>下一篇&nbsp;<i class="fa fa-chevron-right" aria-hidden="true"></i></h6>
+                            <h4>
+                                <a href="/2018/09/30/常用js/" rel="prev" title="常用JS函数，方法举例">
+                                    
+                                        常用JS函数，方法举例
+                                    
+                                </a>
+                            </h4>
+                            
+                                <h6 class="tags">
+                                    
+                                        <i class="fa fa-tag fa-fw"></i>js
+                                    
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+            </div>
+        
+
+    </section>
+
+</article>
+
+<br>
+
+<!-- 显示推荐文章和评论 -->
+
+    <article class="post white-box comments">
+        <section class="article typo">
+
+            
+                
+
+    <div class="recommended_posts">
+        <h4><i class="fa fa-bookmark fa-fw" aria-hidden="true"></i>&nbsp;你可能感兴趣的文章</h4>
+        <ul>
+            
+                <li><a href="http://yoursite.com/2018/09/30/常用js/">常用JS函数，方法举例</a></li>
+            
+        </ul>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+
+
+            
+
+            
+
+                
+
+                
+
+                
+            
+
+        </section>
+    </article>
+
+
+<script>
+    window.subData = {
+        title: 'css编码规范',
+        tools: true
+    }
+</script>
+
+
+        </div>
+        <aside class='l_side'>
+            
+    
+        
+    <section class='m_widget author'>
+        
+            <div class='header'>
+                <img class='avatar' src='https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1538925097697&amp;di=845d8a0f60fef977cbcdd4f88e697663&amp;imgtype=0&amp;src=http%3A%2F%2Fwx3.sinaimg.cn%2Forj360%2F6ffea961ly1fq115c60y1j20qo0v579s.jpg' />
+            </div>
+        
+        <div class='content'>
+            
+                <h2>EH</h2>
+            
+            
+                <div>
+                    <i class="fa fa-quote-left fa-3x fa-pull-left" aria-hidden="true"></i>
+                    人若初见、
+                </div>
+            
+        </div>
+        
+            <div class="social-wrapper">
+              
+                
+                    <a href="kia-001@163.com" class="social flat-box" target="_blank" rel="external"><i class="social fa fa-envelope" aria-hidden="true"></i></a>
+                
+              
+                
+                    <a href="https://github.com/ssza02" class="social flat-box" target="_blank" rel="external"><i class="social fa fa-github" aria-hidden="true"></i></a>
+                
+              
+                
+              
+                
+              
+                
+              
+                
+                    <a href="https://music.163.com/#/user/home?id=63035382" class="social flat-box" target="_blank" rel="external"><i class="social fa fa-music" aria-hidden="true"></i></a>
+                
+              
+                
+                    <a href="atom" class="social flat-box" target="_blank" rel="external"><i class="social fa fa-rss" aria-hidden="true"></i></a>
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+            </div>
+        
+    </section>
+
+
+    
+    
+        <section class='m_widget categories'>
+    <div class='header'><i class="fa fa-sitemap fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;分类</div>
+    <div class='content'>
+        
+            <ul class="entry">
+                
+                    <li><a class="flat-box" href="/categories/css/"><div class='name'>css</div><div class='badge'>1</div></a></li>
+                
+                    <li><a class="flat-box" href="/categories/js/"><div class='name'>js</div><div class='badge'>1</div></a></li>
+                
+            </ul>
+        
+    </div>
+</section>
+
+    
+    
+        
+    <section class='m_widget tagcloud'>
+        <div class="header"><i class="fa fa-tags fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;标签</div>
+        <div class='content'>
+            <a href="/tags/css/" style="font-size: 14px; color: #999">css</a> <a href="/tags/js/" style="font-size: 14px; color: #999">js</a>
+        </div>
+    </section>
+
+
+    
+    
+        <section class='m_widget music'>
+    <div class='header'><i class="fa fa-headphones fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;音乐</div>
+    <div class='content'>
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=100% height=450 src="//music.163.com/outchain/player?type=0&id=2201879658&auto=0&height=450"></iframe>
+    </div>
+</section>
+
+    
+    
+        <section class='m_widget links'>
+    <div class='header'><i class="fa fa-handshake-o fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;友链</div>
+    <div class='content'>
+        <ul class="entry" id="links">
+            
+                <li><a class="flat-box" target="_blank" rel="external nofollow noopener noreferrer" href="https://bigbing.cc">
+                    <div class='name'>
+                        <i class="fa fa-user-circle-o fa-fw" aria-hidden="true"></i>
+                        &nbsp;&nbsp;bigbing
+                    </div>
+                </a></li>
+            
+            
+
+        </ul>
+
+    </div>
+</section>
+
+    
+    
+        
+    <section class='m_widget toc-wrapper'>
+        <div class="header"><i class="fa fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;目录</div>
+        <div class='content'>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#页面结构"><span class="toc-text">页面结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#导航"><span class="toc-text">导航</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#功能"><span class="toc-text">功能</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#样式文件命名"><span class="toc-text">样式文件命名</span></a></li></ol>
+        </div>
+    </section>
+
+
+    
+
+
+        </aside>
+        <script>setLoadingBarProgress(60);</script>
+    </div>
+    </div>
+    <footer id="footer" class="clearfix">
+    
+        <div class="social-wrapper">
+          
+              
+                  <a href="kia-001@163.com" class="social fa fa-envelope flat-box" target="_blank" rel="external"></a>
+              
+          
+              
+                  <a href="https://github.com/ssza02" class="social fa fa-github flat-box" target="_blank" rel="external"></a>
+              
+          
+              
+          
+              
+          
+              
+          
+              
+                  <a href="https://music.163.com/#/user/home?id=63035382" class="social fa fa-music flat-box" target="_blank" rel="external"></a>
+              
+          
+              
+                  <a href="atom" class="social fa fa-rss flat-box" target="_blank" rel="external"></a>
+              
+          
+              
+          
+              
+          
+              
+          
+              
+          
+              
+          
+              
+          
+              
+          
+              
+          
+              
+          
+              
+          
+              
+          
+              
+          
+        </div>
+    
+    <br>
+    <div>博客内容遵循 <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="licenses">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></div>
+    <div>本站使用 <a href="https://github.com/xaoxuu/hexo-theme-material-x" target="_blank" class="codename">Material X</a> 作为主题，
+		总访问量为 <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span> 次。
+    </div>
+</footer>
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+    <script>setLoadingBarProgress(80);</script>
+    <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src='//cdn.bootcss.com/node-waves/0.7.5/waves.min.js'></script>
+<script src="//cdn.bootcss.com/scrollReveal.js/3.3.2/scrollreveal.min.js"></script>
+<!-- 访问统计 -->
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/jquery.fitvids.js"></script>
+
+    <script>
+        var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+        var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+        var ALGOLIA_API_KEY = "";
+        var ALGOLIA_APP_ID = "";
+        var ALGOLIA_INDEX_NAME = "";
+        var AZURE_SERVICE_NAME = "";
+        var AZURE_INDEX_NAME = "";
+        var AZURE_QUERY_KEY = "";
+        var BAIDU_API_ID = "";
+        var SEARCH_SERVICE = "hexo" || "hexo";
+        var ROOT = "/"||"/";
+        if(!ROOT.endsWith('/'))ROOT += '/';
+    </script>
+
+<script src="/js/search.js"></script>
+<script src="/js/app.js"></script>
+
+
+    
+    
+    
+
+
+    <script>setLoadingBarProgress(100);</script>
+</body>
