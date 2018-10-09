@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  <title>在vue中使用SockJS实现webSocket长连接通信的过程 | 叉烧的诞生</title>
+  <meta name="description" content="my blogs" />
+  <meta name="keywords" content="" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="shortcut icon" href="/">
+  <link rel="alternate" href="/atom.xml" title="叉烧的诞生">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <link rel="shortcut icon" href="" />
+  <link rel="icon" href="" />
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href='//cdn.bootcss.com/node-waves/0.7.5/waves.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="/style.css">
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+</head>
+
+<body>
+    <div id="loading-bar-wrapper">
+  <div id="loading-bar"></div>
+</div>
+
+
+    <script>setLoadingBarProgress(20)</script>
+    <header class="l_header">
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+			<a class="logo flat-box" href='/' >
+				<!-- <i class="fa fa-home"></i> -->
+				叉烧的诞生
+			</a>
+
+				<div class='menu'>
+					<ul class='h-list'>
+                        
+    						
+    							<li>
+    								<a class='nav-about flat-box' href='/'>
+    									<i class='fa fa-home fa-'></i>&nbsp;主页
+    								</a>
+    							</li>
+    						
+    							<li>
+    								<a class='nav-projects flat-box' href='https://xaoxuu.com/proj'>
+    									<i class='fa fa-cube fa-'></i>&nbsp;项目
+    								</a>
+    							</li>
+    						
+    							<li>
+    								<a class='nav-home flat-box' href='/'>
+    									<i class='fa fa-rss fa-'></i>&nbsp;博客
+    								</a>
+    							</li>
+    						
+    							<li>
+    								<a class='nav-archives flat-box' href='/archives'>
+    									<i class='fa fa-archive fa-'></i>&nbsp;归档
+    								</a>
+    							</li>
+    						
+        			 
+					</ul>
+					<div class='underline'></div>
+				</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="Search" />
+						<span class="icon"><i class="fa fa-search fa-fw"></i></span>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fa fa-search fa-fw" href='javascript:void(0)'></span></a></li>
+				
+				<li class='s-menu'><a class="fa fa-navicon fa-fw" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo" class="flat-box" href='javascript:void(0)'>
+				ssza02
+			</a>
+
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="fa fa-comments fa-fw flat-box" href='javascript:void(0)'></a></li>
+				<li class='s-top'><a class="fa fa-arrow-up fa-fw flat-box" href='javascript:void(0)'></a></li>
+				<li class='s-toc'><a class="fa fa-list-ul fa-fw flat-box" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+        <div class="header">叉烧的诞生</div>
+		<nav>
+            <ul>
+                
+                    
+                        <li>
+                            <a class='nav-about flat-box nav flat-box' href='/'><i class='fa fa-home fa-fw'></i>&nbsp;主页</a>
+                        </li>
+                    
+                        <li>
+                            <a class='nav-projects flat-box nav flat-box' href='https://xaoxuu.com/proj'><i class='fa fa-cube fa-fw'></i>&nbsp;项目</a>
+                        </li>
+                    
+                        <li>
+                            <a class='nav-home flat-box nav flat-box' href='/'><i class='fa fa-rss fa-fw'></i>&nbsp;博客</a>
+                        </li>
+                    
+                        <li>
+                            <a class='nav-archives flat-box nav flat-box' href='/archives'><i class='fa fa-archive fa-fw'></i>&nbsp;归档</a>
+                        </li>
+                    
+             
+            </ul>
+		</nav>
+	</aside>
+
+    <script>setLoadingBarProgress(40);</script>
+    <div class="l_body">
+    <div class='container clearfix'>
+        <div class='l_main'>
+            <article id="post-在vue中使用SockJS实现webSocket长连接通信的过程" class="post white-box article-type-post" itemscope itemprop="blogPost">
+    <section class='meta'>
+        <h1 class="title">
+            
+                在vue中使用SockJS实现webSocket长连接通信的过程
+            
+        </h1>
+        <time>
+            2018-10-09&nbsp;&nbsp;
+            <i class="fa fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+        </time>
+        
+    
+    <div class='cats'>
+        <a href="/categories/websocket/">websocket</a>
+    </div>
+
+
+    </section>
+
+    <section class="article typo">
+
+        <div class="article-entry" itemprop="articleBody">
+            <blockquote>
+<p>最近一个业务需求，需要和服务器端建立webSocket连接,从而实现消息的实时推送</p>
+</blockquote>
+<h3 id="socksjs"><a href="#socksjs" class="headerlink" title="socksjs"></a>socksjs</h3><ol>
+<li>客户端和服务器端api尽可能简洁，尽量靠近websocket api</li>
+<li>支持服务端扩展和负载均衡技术</li>
+<li>传输层应该全面支持跨域通信</li>
+<li>如果受到代理服务器的限制，传输层能优雅地从一种方式回退到另一种方式</li>
+<li>尽可能快地建立连接</li>
+<li>客户端只是纯粹的JavaScript，不需要flash</li>
+<li>客户端JavaScript必须经过严格的测试</li>
+<li>服务器端代码尽可能简单，降低用另一种语言重写server的代价</li>
+</ol>
+<a id="more"></a>
+<h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><blockquote>
+<p>要进行文章中的代码的测试,需要服务端端开发人员配合你,提供相关的通信接口.来完成客户端和服务端的通信.实现通信,我们需要用到另个模块 sockjs-client 模块和 stomjs 模块,接下来我会先对这两个模块做一个简单的介绍.</p>
+</blockquote>
+<h3 id="关于实时通信"><a href="#关于实时通信" class="headerlink" title="关于实时通信"></a>关于实时通信</h3><ol>
+<li>ajax轮询 ajax轮询的原理非常简单,让浏览器每隔几秒就像服务器发送一个请求,询问服务器是否有新的信息.</li>
+<li>http 长轮询 长轮询的机制和ajax轮询差不多,都是采用轮询的方式,不过才去的是阻塞模型(一直打电话,没收到就不挂电话),也就是说,客户端发起链接后,如果没有消息,就一直不返回response给客户端.知道有新的消息才返回,返回完之后,客户端再此建立连接,周而复始.</li>
+<li>WebSocket WebSocket是HTML5开始提供的一种在单个TCP连接上进行全双工通讯的协议.在WebSocket API中，浏览器和服务器只需要做一个握手的动作，然后，浏览器和服务器之间就形成了一条快速通道。两者之间就直接可以数据互相传送,不需要繁琐的询问和等待. 从上面的介绍很容易看出来,ajax轮询和长轮询都是非常耗费资源的,ajax轮询需要服务器有很快的处理速度和资源,http长轮询需要有很高的并发,也就是同时接待客户的能力.而WebSocket,只需要经过一次HTTP请求,就可以与服务端进行源源不断的消息收发了.</li>
+</ol>
+<h3 id="sockjs-client"><a href="#sockjs-client" class="headerlink" title="sockjs-client"></a>sockjs-client</h3><p>sockjs-client 是从SockJS中分离出来的用于客户端使用的通信模块.所以我们就直接来看看SockJS. SockJS是一个浏览器的JavaScript库,它提供了一个类似于网络的对象,SockJS提供了一个连贯的,跨浏览器的JavaScriptAPI,它在浏览器和Web服务器之间创建了一个低延迟,全双工,跨域通信通道. 你可能会问,我为什么不直接用原生的WebSocket而要使用SockJS呢?这得益于SockJS的一大特性,一些浏览器中缺少对WebSocket的支持,因此，回退选项是必要的，而Spring框架提供了基于SockJS协议的透明的回退选项。SockJS提供了浏览器兼容性,优先使用原生的WebSocket,如果某个浏览器不支持WebSocket,SockJS会自动降级为轮询.</p>
+<h3 id="stomjs"><a href="#stomjs" class="headerlink" title="stomjs"></a>stomjs</h3><p>STOMP(Simple Text-Orientated Messaging Protocol) 面向消息的简单文本协议; WebSocket是一个消息架构,不强制使用任何特定的消息协议,它依赖于应用层解释消息的含义. 与HTTP不同,WebSocket是处在TCP上非常薄的一层,会将字节流转化为文本/二进制消息,因此,对于实际应用来说,WebSocket的通信形式层级过低,因此，可以在 WebSocket 之上使用STOMP协议，来为浏览器 和 server间的 通信增加适当的消息语义。</p>
+<h3 id="STOMP与WebSocket-的关系"><a href="#STOMP与WebSocket-的关系" class="headerlink" title="STOMP与WebSocket 的关系:"></a>STOMP与WebSocket 的关系:</h3><ul>
+<li>HTTP协议解决了web浏览器发起请求以及web服务器响应请求的细节,假设HTTP协议不存在,只能使用TCP套接字来编写web应用,你可能认为这是一件疯狂的事情;</li>
+<li>直接使用WebSocket(SockJS)就很类似于使用TCP套接字来编写web应用,因为没有高层协议,就需要我们定义应用间发送消息的语义,还需要确保连接的两端都能遵循这些语义;</li>
+<li>同HTTP在TCP套接字上添加请求-响应模型层一样,STOMP在WebSocket之上提供了一个基于帧的线路格式层,用来定义消息语义.<br>-</li>
+</ul>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><blockquote>
+<p>代码中除了最基本的连接,还设置了一个定时器,每隔十秒发送一条数据到服务器端,如果发生错误,catch这个错误,重新建立连接.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">// 安装并引入相关模块</span><br><span class="line">import SockJS from &apos;sockjs-client&apos;;</span><br><span class="line">import Stomp from &apos;stompjs&apos;;</span><br><span class="line">export default &#123;</span><br><span class="line"> data() &#123;</span><br><span class="line">  return &#123;</span><br><span class="line">  dataList: []</span><br><span class="line">  &#125;;</span><br><span class="line"> &#125;,</span><br><span class="line"> mounted:function()&#123;</span><br><span class="line">  this.initWebSocket();</span><br><span class="line"> &#125;,</span><br><span class="line"> beforeDestroy: function () &#123;</span><br><span class="line">  // 页面离开时断开连接,清除定时器</span><br><span class="line">  this.disconnect();</span><br><span class="line">  clearInterval(this.timer);</span><br><span class="line"> &#125;,</span><br><span class="line"> methods: &#123;</span><br><span class="line">  initWebSocket() &#123;</span><br><span class="line">  this.connection();</span><br><span class="line">  let self = this;</span><br><span class="line">  // 断开重连机制,尝试发送消息,捕获异常发生时重连</span><br><span class="line">  this.timer = setInterval(() =&gt; &#123;</span><br><span class="line">   try &#123;</span><br><span class="line">   self.stompClient.send(&quot;test&quot;);</span><br><span class="line">   &#125; catch (err) &#123;</span><br><span class="line">   console.log(&quot;断线了: &quot; + err);</span><br><span class="line">   self.connection();</span><br><span class="line">   &#125;</span><br><span class="line">  &#125;, 5000);</span><br><span class="line">  &#125;,</span><br><span class="line">  removeTab(targetName) &#123;</span><br><span class="line">  console.log(targetName)</span><br><span class="line">  &#125;,</span><br><span class="line">  connection() &#123;</span><br><span class="line">  // 建立连接对象</span><br><span class="line">  this.socket = new SockJS(&apos;http://xxxxxx:8089/ws&apos;);//连接服务端提供的通信接口，连接以后才可以订阅广播消息和个人消息</span><br><span class="line">  // 获取STOMP子协议的客户端对象</span><br><span class="line">  this.stompClient = Stomp.over(this.socket);</span><br><span class="line">  // 定义客户端的认证信息,按需求配置</span><br><span class="line">  var headers = &#123;</span><br><span class="line">   login: &apos;mylogin&apos;,</span><br><span class="line">   passcode: &apos;mypasscode&apos;,</span><br><span class="line">   // additional header</span><br><span class="line">   &apos;client-id&apos;: &apos;my-client-id&apos;</span><br><span class="line">  &#125;;</span><br><span class="line">  // 向服务器发起websocket连接</span><br><span class="line">  this.stompClient.connect(headers,(frame) =&gt; &#123;</span><br><span class="line">   this.stompClient.subscribe(&apos;/topic/chat_msg&apos;, (msg) =&gt; &#123; // 订阅服务端提供的某个topic</span><br><span class="line">   consolel.log(msg.body); // msg.body存放的是服务端发送给我们的信息</span><br><span class="line">   &#125;);</span><br><span class="line">  &#125;, (err) =&gt; &#123;</span><br><span class="line"></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line">  disconnect() &#123;</span><br><span class="line">  if (this.stompClient != null) &#123;</span><br><span class="line">   this.stompClient.disconnect();</span><br><span class="line">   console.log(&quot;Disconnected&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p>websocket的实现有很多种，不过这个插件相对兼容性大些。<br>以上就是vue中使用SockJS实现webSocket通信的过程，希望对大家有帮助。</p>
+
+        </div>
+
+        
+            <div class="article-tags tags">
+                
+                    <a href="/tags/websocket/"><i class="fa fa-tag fa-fw" aria-hidden="true"></i>&nbsp;websocket</a>
+                
+                    <a href="/tags/sockJs/"><i class="fa fa-tag fa-fw" aria-hidden="true"></i>&nbsp;sockJs</a>
+                
+            </div>
+        
+
+        
+            <div class="prev-next">
+                
+                
+                    <section class="next">
+                        <span class="art-item-right" aria-hidden="true">
+                            <h6>下一篇&nbsp;<i class="fa fa-chevron-right" aria-hidden="true"></i></h6>
+                            <h4>
+                                <a href="/2018/10/08/vue中slot的使用/" rel="prev" title="vue中slot的使用">
+                                    
+                                        vue中slot的使用
+                                    
+                                </a>
+                            </h4>
+                            
+                                <h6 class="tags">
+                                    
+                                        <i class="fa fa-tag fa-fw"></i>vue
+                                    
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+            </div>
+        
+
+    </section>
+
+</article>
+
+<br>
+
+<!-- 显示推荐文章和评论 -->
+
+    <article class="post white-box comments">
+        <section class="article typo">
+
+            
+                
+
+    <div class="recommended_posts">
+        <h4><i class="fa fa-bookmark fa-fw" aria-hidden="true"></i>&nbsp;你可能感兴趣的文章</h4>
+        <ul>
+            
+                <li><a href="http://yoursite.com/2018/10/08/vue中slot的使用/">vue中slot的使用</a></li>
+            
+                <li><a href="http://yoursite.com/2018/10/07/css编码规范/">css编码规范</a></li>
+            
+                <li><a href="http://yoursite.com/2018/09/30/常用js/">常用JS函数，方法举例</a></li>
+            
+        </ul>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+
+
+            
+
+            
+
+                
+
+                
+
+                
+            
+
+        </section>
+    </article>
+
+
+<script>
+    window.subData = {
+        title: '在vue中使用SockJS实现webSocket长连接通信的过程',
+        tools: true
+    }
+</script>
+
+
+        </div>
+        <aside class='l_side'>
+            
+    
+        
+    <section class='m_widget author'>
+        
+            <div class='header'>
+                <img class='avatar' src='https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1538925097697&amp;di=845d8a0f60fef977cbcdd4f88e697663&amp;imgtype=0&amp;src=http%3A%2F%2Fwx3.sinaimg.cn%2Forj360%2F6ffea961ly1fq115c60y1j20qo0v579s.jpg' />
+            </div>
+        
+        <div class='content'>
+            
+                <h2>EH</h2>
+            
+            
+                <div>
+                    <i class="fa fa-quote-left fa-3x fa-pull-left" aria-hidden="true"></i>
+                    人若初见、
+                </div>
+            
+        </div>
+        
+            <div class="social-wrapper">
+              
+                
+                    <a href="kia-001@163.com" class="social flat-box" target="_blank" rel="external"><i class="social fa fa-envelope" aria-hidden="true"></i></a>
+                
+              
+                
+                    <a href="https://github.com/ssza02" class="social flat-box" target="_blank" rel="external"><i class="social fa fa-github" aria-hidden="true"></i></a>
+                
+              
+                
+              
+                
+              
+                
+              
+                
+                    <a href="https://music.163.com/#/user/home?id=63035382" class="social flat-box" target="_blank" rel="external"><i class="social fa fa-music" aria-hidden="true"></i></a>
+                
+              
+                
+                    <a href="atom" class="social flat-box" target="_blank" rel="external"><i class="social fa fa-rss" aria-hidden="true"></i></a>
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+                
+              
+            </div>
+        
+    </section>
+
+
+    
+    
+        <section class='m_widget categories'>
+    <div class='header'><i class="fa fa-sitemap fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;分类</div>
+    <div class='content'>
+        
+            <ul class="entry">
+                
+                    <li><a class="flat-box" href="/categories/css/"><div class='name'>css</div><div class='badge'>1</div></a></li>
+                
+                    <li><a class="flat-box" href="/categories/js/"><div class='name'>js</div><div class='badge'>1</div></a></li>
+                
+                    <li><a class="flat-box" href="/categories/vue/"><div class='name'>vue</div><div class='badge'>1</div></a></li>
+                
+                    <li><a class="flat-box" href="/categories/websocket/"><div class='name'>websocket</div><div class='badge'>1</div></a></li>
+                
+            </ul>
+        
+    </div>
+</section>
+
+    
+    
+        
+    <section class='m_widget tagcloud'>
+        <div class="header"><i class="fa fa-tags fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;标签</div>
+        <div class='content'>
+            <a href="/tags/css/" style="font-size: 14px; color: #999">css</a> <a href="/tags/js/" style="font-size: 14px; color: #999">js</a> <a href="/tags/sockJs/" style="font-size: 14px; color: #999">sockJs</a> <a href="/tags/vue/" style="font-size: 14px; color: #999">vue</a> <a href="/tags/websocket/" style="font-size: 14px; color: #999">websocket</a>
+        </div>
+    </section>
+
+
+    
+    
+        <section class='m_widget music'>
+    <div class='header'><i class="fa fa-headphones fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;音乐</div>
+    <div class='content'>
+        <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=100% height=450 src="//music.163.com/outchain/player?type=0&id=2201879658&auto=0&height=450"></iframe>
+    </div>
+</section>
+
+    
+    
+        <section class='m_widget links'>
+    <div class='header'><i class="fa fa-handshake-o fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;友链</div>
+    <div class='content'>
+        <ul class="entry" id="links">
+            
+                <li><a class="flat-box" target="_blank" rel="external nofollow noopener noreferrer" href="https://bigbing.cc">
+                    <div class='name'>
+                        <i class="fa fa-user-circle-o fa-fw" aria-hidden="true"></i>
+                        &nbsp;&nbsp;bigbing
+                    </div>
+                </a></li>
+            
+            
+
+        </ul>
+
+    </div>
+</section>
+
+    
+    
+        
+    <section class='m_widget toc-wrapper'>
+        <div class="header"><i class="fa fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;目录</div>
+        <div class='content'>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#socksjs"><span class="toc-text">socksjs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前提"><span class="toc-text">前提</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于实时通信"><span class="toc-text">关于实时通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sockjs-client"><span class="toc-text">sockjs-client</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stomjs"><span class="toc-text">stomjs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#STOMP与WebSocket-的关系"><span class="toc-text">STOMP与WebSocket 的关系:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码实现"><span class="toc-text">代码实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结："><span class="toc-text">总结：</span></a></li></ol>
+        </div>
+    </section>
+
+
+    
+
+
+        </aside>
+        <script>setLoadingBarProgress(60);</script>
+    </div>
+    </div>
+    <footer id="footer" class="clearfix">
+    
+        <div class="social-wrapper">
+          
+              
+                  <a href="kia-001@163.com" class="social fa fa-envelope flat-box" target="_blank" rel="external"></a>
+              
+          
+              
+                  <a href="https://github.com/ssza02" class="social fa fa-github flat-box" target="_blank" rel="external"></a>
+              
+          
+              
+          
+              
+          
+              
+          
+              
+                  <a href="https://music.163.com/#/user/home?id=63035382" class="social fa fa-music flat-box" target="_blank" rel="external"></a>
+              
+          
+              
+                  <a href="atom" class="social fa fa-rss flat-box" target="_blank" rel="external"></a>
+              
+          
+              
+          
+              
+          
+              
+          
+              
+          
+              
+          
+              
+          
+              
+          
+              
+          
+              
+          
+              
+          
+              
+          
+              
+          
+        </div>
+    
+    <br>
+    <div>博客内容遵循 <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="licenses">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></div>
+    <div>本站使用 <a href="https://github.com/xaoxuu/hexo-theme-material-x" target="_blank" class="codename">Material X</a> 作为主题，
+		总访问量为 <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span> 次。
+    </div>
+</footer>
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+    <script>setLoadingBarProgress(80);</script>
+    <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src='//cdn.bootcss.com/node-waves/0.7.5/waves.min.js'></script>
+<script src="//cdn.bootcss.com/scrollReveal.js/3.3.2/scrollreveal.min.js"></script>
+<!-- 访问统计 -->
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+<script src="/js/jquery.fitvids.js"></script>
+
+    <script>
+        var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+        var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+        var ALGOLIA_API_KEY = "";
+        var ALGOLIA_APP_ID = "";
+        var ALGOLIA_INDEX_NAME = "";
+        var AZURE_SERVICE_NAME = "";
+        var AZURE_INDEX_NAME = "";
+        var AZURE_QUERY_KEY = "";
+        var BAIDU_API_ID = "";
+        var SEARCH_SERVICE = "hexo" || "hexo";
+        var ROOT = "/"||"/";
+        if(!ROOT.endsWith('/'))ROOT += '/';
+    </script>
+
+<script src="/js/search.js"></script>
+<script src="/js/app.js"></script>
+
+
+    
+    
+    
+
+
+    <script>setLoadingBarProgress(100);</script>
+</body>

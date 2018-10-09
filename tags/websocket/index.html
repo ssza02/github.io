@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Category: js | 叉烧的诞生</title>
+  <title>Tag: websocket | 叉烧的诞生</title>
   <meta name="description" content="my blogs" />
   <meta name="keywords" content="" />
   <meta name="HandheldFriendly" content="True" />
@@ -136,7 +136,7 @@
         <div class='l_main'>
             
     <script>
-        window.subData= { title:'category : js'}
+        window.subData= { title:'tag : websocket'}
     </script>
 
 
@@ -147,48 +147,50 @@
             <article class="post reveal ">
     <section class="meta">
         <h2 class="title">
-            <a href="/2018/09/30/常用js/">
+            <a href="/2018/10/09/在vue中使用SockJS实现webSocket长连接通信的过程/">
                 
-                    常用JS函数，方法举例
+                    在vue中使用SockJS实现webSocket长连接通信的过程
                 
             </a>
         </h2>
         <time>
-            2018-09-30
+            2018-10-09
         </time>
         
     
     <div class='cats'>
-        <a href="/categories/js/">js</a>
+        <a href="/categories/websocket/">websocket</a>
     </div>
 
 
     </section>
 
     <section class="article typo">
-        <h3 id="1-push-与unshift-方法"><a href="#1-push-与unshift-方法" class="headerlink" title="1. push()与unshift()方法"></a>1. push()与unshift()方法</h3><blockquote>
-<p>把一个或多个元素添加到数组的尾部，请使用 push() 方法<br>   往数组头部添加元素，用unshift（）方法</p>
+        <blockquote>
+<p>最近一个业务需求，需要和服务器端建立webSocket连接,从而实现消息的实时推送</p>
 </blockquote>
-<h3 id="2-split-‘-’-1"><a href="#2-split-‘-’-1" class="headerlink" title="2. split(‘.’)[1]"></a>2. split(‘.’)[1]</h3><blockquote>
-<p>这里split(‘.’)[1] 是一种缩写形式，把它拆开来看实际就是<br>先用split(‘.’)方法将字符串以”.”开割形成一个字符串数组，然后再通过索引[1]取出所得数组中的第二个元素的值</p>
-</blockquote>
-<h3 id="3-findIndex"><a href="#3-findIndex" class="headerlink" title="3. findIndex()"></a>3. findIndex()</h3><blockquote>
-<p>findIndex() 方法返回传入一个测试条件（函数）符合条件的数组第一个元素位置。</p>
-</blockquote>
-<h3 id="4-substr"><a href="#4-substr" class="headerlink" title="4. substr()"></a>4. substr()</h3><blockquote>
-<p>substr() 方法可在字符串中抽取从 start 下标开始的指定数目的字符。<br>在本例中，我们将使用 substr() 从字符串中提取一些字符：</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line"></span><br><span class="line">var str=&quot;Hello world!&quot;</span><br><span class="line">document.write(str.substr(3,7))</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br><span class="line">输出：</span><br><span class="line">lo worl</span><br></pre></td></tr></table></figure>
+<h3 id="socksjs"><a href="#socksjs" class="headerlink" title="socksjs"></a>socksjs</h3><ol>
+<li>客户端和服务器端api尽可能简洁，尽量靠近websocket api</li>
+<li>支持服务端扩展和负载均衡技术</li>
+<li>传输层应该全面支持跨域通信</li>
+<li>如果受到代理服务器的限制，传输层能优雅地从一种方式回退到另一种方式</li>
+<li>尽可能快地建立连接</li>
+<li>客户端只是纯粹的JavaScript，不需要flash</li>
+<li>客户端JavaScript必须经过严格的测试</li>
+<li>服务器端代码尽可能简单，降低用另一种语言重写server的代价</li>
+</ol>
         
             <div class="readmore">
-                <a href="/2018/09/30/常用js/" class="flat-box">READ MORE</a>
+                <a href="/2018/10/09/在vue中使用SockJS实现webSocket长连接通信的过程/" class="flat-box">READ MORE</a>
             </div>
         
 
         
             <div class="full-width auto-padding tags">
                 
-                    <a href="/tags/js/"><i class="fa fa-tag fa-fw"></i>&nbsp;js</a>
+                    <a href="/tags/websocket/"><i class="fa fa-tag fa-fw"></i>&nbsp;websocket</a>
+                
+                    <a href="/tags/sockJs/"><i class="fa fa-tag fa-fw"></i>&nbsp;sockJs</a>
                 
             </div>
         
