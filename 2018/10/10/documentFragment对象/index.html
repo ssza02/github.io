@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Tag: sockJs | 叉烧的诞生</title>
+  <title>documentFragment对象 | 叉烧的诞生</title>
   <meta name="description" content="my blogs" />
   <meta name="keywords" content="" />
   <meta name="HandheldFriendly" content="True" />
@@ -134,73 +134,127 @@
     <div class="l_body">
     <div class='container clearfix'>
         <div class='l_main'>
+            <article id="post-documentFragment对象" class="post white-box article-type-post" itemscope itemprop="blogPost">
+    <section class='meta'>
+        <h1 class="title">
             
-    <script>
-        window.subData= { title:'tag : sockJs'}
-    </script>
-
-
-<section class="post-list">
-    
-    
-        <div class='post-wrapper'>
-            <article class="post reveal ">
-    <section class="meta">
-        <h2 class="title">
-            <a href="/2018/10/09/在vue中使用SockJS实现webSocket长连接通信的过程/">
-                
-                    在vue中使用SockJS实现webSocket长连接通信的过程
-                
-            </a>
-        </h2>
+                documentFragment对象
+            
+        </h1>
         <time>
-            2018-10-09
+            2018-10-10&nbsp;&nbsp;
+            <i class="fa fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
         </time>
         
     
     <div class='cats'>
-        <a href="/categories/websocket/">websocket</a>
+        <a href="/categories/js/">js</a>
     </div>
 
 
     </section>
 
     <section class="article typo">
-        <blockquote>
-<p>最近一个业务需求，需要和服务器端建立webSocket连接,从而实现消息的实时推送</p>
+
+        <div class="article-entry" itemprop="articleBody">
+            <blockquote>
+<p>一般动态创建html元素都是创建好了直接appendChild()上去，但是如果要添加大量的元素还用这个方法的话就会导致大量的重绘以及回流，所以需要一个’缓存区’来保存创建的节点，然后再一次性添加到父节点中。这时候DocumentFragment对象就派上用场了。</p>
 </blockquote>
-<h3 id="socksjs"><a href="#socksjs" class="headerlink" title="socksjs"></a>socksjs</h3><ol>
-<li>客户端和服务器端api尽可能简洁，尽量靠近websocket api</li>
-<li>支持服务端扩展和负载均衡技术</li>
-<li>传输层应该全面支持跨域通信</li>
-<li>如果受到代理服务器的限制，传输层能优雅地从一种方式回退到另一种方式</li>
-<li>尽可能快地建立连接</li>
-<li>客户端只是纯粹的JavaScript，不需要flash</li>
-<li>客户端JavaScript必须经过严格的测试</li>
-<li>服务器端代码尽可能简单，降低用另一种语言重写server的代价</li>
-</ol>
+<h3 id="看下w3c的官方说明："><a href="#看下w3c的官方说明：" class="headerlink" title="看下w3c的官方说明："></a>看下w3c的官方说明：</h3><p>DocumentFragment 节点不属于文档树，继承的 parentNode 属性总是 null。</p>
+<p>不过它有一种特殊的行为，该行为使得它非常有用，即当请求把一个 DocumentFragment 节点插入文档树时，插入的不是 DocumentFragment 自身，而是它的所有子孙节点。这使得 DocumentFragment 成了有用的占位符，暂时存放那些一次插入文档的节点。它还有利于实现文档的剪切、复制和粘贴操作。</p>
+<p>重点就在于DocumentFragment 节点不属于文档树。因此当把创建的节点添加到该对象时，并不会导致页面的回流，因此性能就自然上去了。</p>
+<h3 id="创建该对象也简单："><a href="#创建该对象也简单：" class="headerlink" title="创建该对象也简单："></a>创建该对象也简单：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var fragment = document.createDocumentFragment();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">看下实例：</span><br><span class="line"></span><br><span class="line">复制代码</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">    var pNode,fragment = document.createDocumentFragment();</span><br><span class="line"></span><br><span class="line">    for(var i=0; i&lt;20; i++)&#123;</span><br><span class="line">        pNode = document.createElement(&apos;p&apos;);</span><br><span class="line">        pNode.innerHTML = i;</span><br><span class="line">        fragment.appendChild(pNode);</span><br><span class="line">    &#125;</span><br><span class="line">    document.body.appendChild(fragment);</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+        </div>
+
         
-            <div class="readmore">
-                <a href="/2018/10/09/在vue中使用SockJS实现webSocket长连接通信的过程/" class="flat-box">READ MORE</a>
+            <div class="article-tags tags">
+                
+                    <a href="/tags/js/"><i class="fa fa-tag fa-fw" aria-hidden="true"></i>&nbsp;js</a>
+                
             </div>
         
 
         
-            <div class="full-width auto-padding tags">
+            <div class="prev-next">
                 
-                    <a href="/tags/websocket/"><i class="fa fa-tag fa-fw"></i>&nbsp;websocket</a>
                 
-                    <a href="/tags/sockJs/"><i class="fa fa-tag fa-fw"></i>&nbsp;sockJs</a>
+                    <section class="next">
+                        <span class="art-item-right" aria-hidden="true">
+                            <h6>下一篇&nbsp;<i class="fa fa-chevron-right" aria-hidden="true"></i></h6>
+                            <h4>
+                                <a href="/2018/10/09/在vue中使用SockJS实现webSocket长连接通信的过程/" rel="prev" title="在vue中使用SockJS实现webSocket长连接通信的过程">
+                                    
+                                        在vue中使用SockJS实现webSocket长连接通信的过程
+                                    
+                                </a>
+                            </h4>
+                            
+                                <h6 class="tags">
+                                    
+                                        <i class="fa fa-tag fa-fw"></i>websocket
+                                    
+                                        <i class="fa fa-tag fa-fw"></i>sockJs
+                                    
+                                </h6>
+                            
+                        </span>
+                    </section>
                 
             </div>
         
+
     </section>
+
 </article>
 
-        </div>
-    
-</section>
+<br>
 
+<!-- 显示推荐文章和评论 -->
+
+    <article class="post white-box comments">
+        <section class="article typo">
+
+            
+                
+
+    <div class="recommended_posts">
+        <h4><i class="fa fa-bookmark fa-fw" aria-hidden="true"></i>&nbsp;你可能感兴趣的文章</h4>
+        <ul>
+            
+                <li><a href="http://yoursite.com/2018/10/09/在vue中使用SockJS实现webSocket长连接通信的过程/">在vue中使用SockJS实现webSocket长连接通信的过程</a></li>
+            
+                <li><a href="http://yoursite.com/2018/10/08/vue中slot的使用/">vue中slot的使用</a></li>
+            
+                <li><a href="http://yoursite.com/2018/10/07/css编码规范/">css编码规范</a></li>
+            
+                <li><a href="http://yoursite.com/2018/09/30/常用js/">常用JS函数，方法举例</a></li>
+            
+        </ul>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+
+
+            
+
+            
+
+                
+
+                
+
+                
+            
+
+        </section>
+    </article>
+
+
+<script>
+    window.subData = {
+        title: 'documentFragment对象',
+        tools: true
+    }
+</script>
 
 
         </div>
@@ -344,6 +398,13 @@
     
     
         
+    <section class='m_widget toc-wrapper'>
+        <div class="header"><i class="fa fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;目录</div>
+        <div class='content'>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#看下w3c的官方说明："><span class="toc-text">看下w3c的官方说明：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建该对象也简单："><span class="toc-text">创建该对象也简单：</span></a></li></ol>
+        </div>
+    </section>
+
 
     
 
@@ -441,6 +502,10 @@
 <script src="/js/search.js"></script>
 <script src="/js/app.js"></script>
 
+
+    
+    
+    
 
 
     <script>setLoadingBarProgress(100);</script>

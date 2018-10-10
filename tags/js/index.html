@@ -147,6 +147,50 @@
             <article class="post reveal ">
     <section class="meta">
         <h2 class="title">
+            <a href="/2018/10/10/documentFragment对象/">
+                
+                    documentFragment对象
+                
+            </a>
+        </h2>
+        <time>
+            2018-10-10
+        </time>
+        
+    
+    <div class='cats'>
+        <a href="/categories/js/">js</a>
+    </div>
+
+
+    </section>
+
+    <section class="article typo">
+        <blockquote>
+<p>一般动态创建html元素都是创建好了直接appendChild()上去，但是如果要添加大量的元素还用这个方法的话就会导致大量的重绘以及回流，所以需要一个’缓存区’来保存创建的节点，然后再一次性添加到父节点中。这时候DocumentFragment对象就派上用场了。</p>
+</blockquote>
+<h3 id="看下w3c的官方说明："><a href="#看下w3c的官方说明：" class="headerlink" title="看下w3c的官方说明："></a>看下w3c的官方说明：</h3><p>DocumentFragment 节点不属于文档树，继承的 parentNode 属性总是 null。</p>
+<p>不过它有一种特殊的行为，该行为使得它非常有用，即当请求把一个 DocumentFragment 节点插入文档树时，插入的不是 DocumentFragment 自身，而是它的所有子孙节点。这使得 DocumentFragment 成了有用的占位符，暂时存放那些一次插入文档的节点。它还有利于实现文档的剪切、复制和粘贴操作。</p>
+<p>重点就在于DocumentFragment 节点不属于文档树。因此当把创建的节点添加到该对象时，并不会导致页面的回流，因此性能就自然上去了。</p>
+<h3 id="创建该对象也简单："><a href="#创建该对象也简单：" class="headerlink" title="创建该对象也简单："></a>创建该对象也简单：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var fragment = document.createDocumentFragment();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">看下实例：</span><br><span class="line"></span><br><span class="line">复制代码</span><br><span class="line">&lt;script type=&quot;text/javascript&quot;&gt;</span><br><span class="line">    var pNode,fragment = document.createDocumentFragment();</span><br><span class="line"></span><br><span class="line">    for(var i=0; i&lt;20; i++)&#123;</span><br><span class="line">        pNode = document.createElement(&apos;p&apos;);</span><br><span class="line">        pNode.innerHTML = i;</span><br><span class="line">        fragment.appendChild(pNode);</span><br><span class="line">    &#125;</span><br><span class="line">    document.body.appendChild(fragment);</span><br><span class="line"></span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+        
+
+        
+            <div class="full-width auto-padding tags">
+                
+                    <a href="/tags/js/"><i class="fa fa-tag fa-fw"></i>&nbsp;js</a>
+                
+            </div>
+        
+    </section>
+</article>
+
+        </div>
+    
+        <div class='post-wrapper'>
+            <article class="post reveal ">
+    <section class="meta">
+        <h2 class="title">
             <a href="/2018/09/30/常用js/">
                 
                     常用JS函数，方法举例
@@ -287,7 +331,7 @@
                 
                     <li><a class="flat-box" href="/categories/css/"><div class='name'>css</div><div class='badge'>1</div></a></li>
                 
-                    <li><a class="flat-box" href="/categories/js/"><div class='name'>js</div><div class='badge'>1</div></a></li>
+                    <li><a class="flat-box" href="/categories/js/"><div class='name'>js</div><div class='badge'>2</div></a></li>
                 
                     <li><a class="flat-box" href="/categories/vue/"><div class='name'>vue</div><div class='badge'>1</div></a></li>
                 
@@ -304,7 +348,7 @@
     <section class='m_widget tagcloud'>
         <div class="header"><i class="fa fa-tags fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;标签</div>
         <div class='content'>
-            <a href="/tags/css/" style="font-size: 14px; color: #999">css</a> <a href="/tags/js/" style="font-size: 14px; color: #999">js</a> <a href="/tags/sockJs/" style="font-size: 14px; color: #999">sockJs</a> <a href="/tags/vue/" style="font-size: 14px; color: #999">vue</a> <a href="/tags/websocket/" style="font-size: 14px; color: #999">websocket</a>
+            <a href="/tags/css/" style="font-size: 14px; color: #999">css</a> <a href="/tags/js/" style="font-size: 24px; color: #555">js</a> <a href="/tags/sockJs/" style="font-size: 14px; color: #999">sockJs</a> <a href="/tags/vue/" style="font-size: 14px; color: #999">vue</a> <a href="/tags/websocket/" style="font-size: 14px; color: #999">websocket</a>
         </div>
     </section>
 
