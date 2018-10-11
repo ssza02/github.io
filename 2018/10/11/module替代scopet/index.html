@@ -159,6 +159,7 @@
         <div class="article-entry" itemprop="articleBody">
             <h3 id="关于CSS-Module"><a href="#关于CSS-Module" class="headerlink" title="关于CSS Module"></a>关于CSS Module</h3><p>css modules是一种流行的模块化和组合CSS的系统。 vue-loader提供了与css modules的集成，作为scope CSS的替代方案。<br>vue引入scopet，有缺陷的样式私有化</p>
 <p>最开始的时候，我们提倡并大量使用的是scoped这种技术<br>在vue组件中，为了使样式私有化（模块化），不对全局造成污染，可以在style标签上添加scoped属性，以表示它的只属于当下的模块，这是一个非常好的举措。</p>
+<a id="more"></a>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@media (min-width: 250px) &#123;</span><br><span class="line">.list-container:hover &#123;</span><br><span class="line">background: orange;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这个可选 scoped 属性会自动添加一个唯一的属性 (比如 data-v-21e5b78) 为组件内 CSS 指定作用域<br>编译的时候 .list-container:hover 会被编译成类似 .list-container[data-v-21e5b78]:hover</p>
 <p>但是，它并不能完全避免冲突<br>如果用户在不同的父子级，定义了一个重复的类名，会影响到所有定义为errShow类名的组件的显示<br>并且它会造成一种后果，每个样式的权重加重了：<br>理论上我们要去修改这个样式，需要更高的权重去覆盖这个样式。<br>这是增加复杂度的其中一个维度。</p>
@@ -208,9 +209,9 @@
         
             <div class="article-tags tags">
                 
-                    <a href="/tags/css/"><i class="fa fa-tag fa-fw" aria-hidden="true"></i>&nbsp;css</a>
-                
                     <a href="/tags/vue/"><i class="fa fa-tag fa-fw" aria-hidden="true"></i>&nbsp;vue</a>
+                
+                    <a href="/tags/css/"><i class="fa fa-tag fa-fw" aria-hidden="true"></i>&nbsp;css</a>
                 
             </div>
         
