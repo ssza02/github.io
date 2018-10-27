@@ -3,6 +3,29 @@
   
     
     <entry>
+      <title>前端性能优化(上)</title>
+      <link href="/2018/10/27/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-%E4%B8%8A/"/>
+      <url>/2018/10/27/%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-%E4%B8%8A/</url>
+      
+        <content type="html"><![CDATA[<h2 id="网络方面的优化"><a href="#网络方面的优化" class="headerlink" title="网络方面的优化"></a>网络方面的优化</h2><h3 id="我们往往在一张图片满足以下条件时会对它应用-Base64-编码："><a href="#我们往往在一张图片满足以下条件时会对它应用-Base64-编码：" class="headerlink" title="我们往往在一张图片满足以下条件时会对它应用 Base64 编码："></a>我们往往在一张图片满足以下条件时会对它应用 Base64 编码：</h3><ul><li>图片的实际尺寸很小（大家可以观察一下掘金页面的 Base64 图，几乎没有超过 2kb 的）</li><li>图片无法以雪碧图的形式与其它小图结合（合成雪碧图仍是主要的减少 HTTP 请求的途径，Base64 是雪碧图的补充）</li><li>图片的更新频率非常低（不需我们重复编码和修改文件内容，维护成本较低）</li></ul><h3 id="webP"><a href="#webP" class="headerlink" title="webP"></a>webP</h3><blockquote><p>WebP 像 JPEG 一样对细节丰富的图片信手拈来，像 PNG 一样支持透明，像 GIF 一样可以显示动态图片——它集多种图片文件格式的优点于一身。</p></blockquote><p>WebP 纵有千般好，但它毕竟太年轻。我们知道，任何新生事物，都逃不开兼容性的大坑。兼容性现在还是不怎么友好，只有chrome（亲爹）兼容比较齐全。</p><p>Safari 提示我们找不到，这也是情理之中。我们定位到刚刚示例的 WebP 图片所在的元素，查看一下它在 Safari 里的图片链接：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=&quot;//img.alicdn.com/tps/i4/TB1CKSgIpXXXXccXXXX07tlTXXX-200-200.png_60x60.jpg&quot; alt=&quot;手机app - 聚划算&quot; class=&quot;app-icon&quot;&gt;</span><br></pre></td></tr></table></figure><p>我们看到同样的一张图片，在 Safari 中的后缀从 .webp 变成了 .jpg！看来果然如此——站点确实是先进行了兼容性的预判，在浏览器环境支持 WebP 的情况下，优先使用 WebP 格式，否则就把图片降级为 JPG 格式（本质是对图片的链接地址作简单的字符串切割）。</p><p>此外，还有另一个维护性更强、更加灵活的方案——把判断工作交给后端，由服务器根据 HTTP 请求头部的 ==Accept== 字段来决定返回什么格式的图片。当 Accept 字段包含 image/webp 时，就返回 WebP 格式的图片，否则返回原图。这种做法的好处是，当浏览器对 WebP 格式图片的兼容支持发生改变时，我们也不用再去更新自己的兼容判定代码，只需要服务端像往常一样对 Accept 字段进行检查即可。</p><a id="more"></a><h2 id="存储方面的优化"><a href="#存储方面的优化" class="headerlink" title="存储方面的优化"></a>存储方面的优化</h2><ul><li>cookie</li><li>localStorage</li><li>sessionStorage</li><li>IndexDB</li></ul><h3 id="Local-Storage-与-Session-Storage-的区别"><a href="#Local-Storage-与-Session-Storage-的区别" class="headerlink" title="Local Storage 与 Session Storage 的区别"></a>Local Storage 与 Session Storage 的区别</h3><p>两者的区别在于生命周期与作用域的不同。</p><ul><li><p>生命周期：Local Storage 是持久化的本地存储，存储在其中的数据是永远不会过期的，使其消失的唯一办法是手动删除；而 Session Storage 是临时性的本地存储，它是会话级别的存储，当会话结束（页面被关闭）时，存储内容也随之被释放。</p></li><li><p>作用域：Local Storage、Session Storage 和 Cookie 都遵循同源策略。但 Session Storage 特别的一点在于，即便是相同域名下的两个页面，只要它们不在同一个浏览器窗口中打开，那么它们的 Session Storage 内容便无法共享。</p></li></ul><h3 id="Web-Storage-的特性"><a href="#Web-Storage-的特性" class="headerlink" title="Web Storage 的特性"></a>Web Storage 的特性</h3><ul><li><p>存储容量大： Web Storage 根据浏览器的不同，存储容量可以达到 5-10M 之间。</p></li><li><p>仅位于浏览器端，不与服务端发生通信。</p></li></ul><h4 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h4><ul><li>Local Storage</li></ul><p>Local Storage 在存储方面没有什么特别的限制，理论上 Cookie 无法胜任的、可以用简单的键值对来存取的数据存储任务，都可以交给 Local Storage 来做。</p><p>这里给大家举个例子，考虑到 Local Storage 的特点之一是持久，有时我们更倾向于用它来存储一些内容稳定的资源。比如图片内容丰富的电商网站会用它来存储 Base64 格式的图片字符串。有的网站还会用它存储一些不经常更新的 CSS、JS 等静态资源。</p><ul><li>Session Storage</li></ul><p>Session Storage 更适合用来存储生命周期和它同步的会话级别的信息。这些信息只适用于当前会话，当你开启新的会话时，它也需要相应的更新或释放。比如微博的 Session Storage 就主要是存储你本次会话的浏览足迹。</p><h3 id="终极形态：IndexDB"><a href="#终极形态：IndexDB" class="headerlink" title="终极形态：IndexDB"></a>终极形态：IndexDB</h3><p>IndexDB 是一个运行在浏览器上的非关系型数据库。既然是数据库了，那就不是 5M、10M 这样小打小闹级别了。理论上来说，IndexDB 是没有存储上限的（一般来说不会小于 250M）。它不仅可以存储字符串，还可以存储二进制数据。</p><h4 id="应用场景-1"><a href="#应用场景-1" class="headerlink" title="应用场景"></a>应用场景</h4><p>通过上面的示例大家可以看出，在 IndexDB 中，我们可以创建多个数据库，一个数据库中创建多张表，一张表中存储多条数据——这足以 hold 住复杂的结构性数据。IndexDB 可以看做是 LocalStorage 的一个升级，当数据的复杂度和规模上升到了 LocalStorage 无法解决的程度，我们毫无疑问可以请出 IndexDB 来帮忙。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 前端优化 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 前端优化 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    <entry>
       <title>主流浏览器图片反防盗链方法总结</title>
       <link href="/2018/10/19/%E4%B8%BB%E6%B5%81%E6%B5%8F%E8%A7%88%E5%99%A8%E5%9B%BE%E7%89%87%E5%8F%8D%E9%98%B2%E7%9B%97%E9%93%BE%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/"/>
       <url>/2018/10/19/%E4%B8%BB%E6%B5%81%E6%B5%8F%E8%A7%88%E5%99%A8%E5%9B%BE%E7%89%87%E5%8F%8D%E9%98%B2%E7%9B%97%E9%93%BE%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93/</url>

@@ -148,6 +148,60 @@
             <article class="post reveal ">
     <section class="meta">
         <h2 class="title">
+            <a href="/2018/10/27/前端性能优化-上/">
+                
+                    前端性能优化(上)
+                
+            </a>
+        </h2>
+        <time>
+            2018-10-27
+        </time>
+        
+    
+    <div class='cats'>
+        <a href="/categories/前端优化/">前端优化</a>
+    </div>
+
+
+    </section>
+
+    <section class="article typo">
+        <h2 id="网络方面的优化"><a href="#网络方面的优化" class="headerlink" title="网络方面的优化"></a>网络方面的优化</h2><h3 id="我们往往在一张图片满足以下条件时会对它应用-Base64-编码："><a href="#我们往往在一张图片满足以下条件时会对它应用-Base64-编码：" class="headerlink" title="我们往往在一张图片满足以下条件时会对它应用 Base64 编码："></a>我们往往在一张图片满足以下条件时会对它应用 Base64 编码：</h3><ul>
+<li>图片的实际尺寸很小（大家可以观察一下掘金页面的 Base64 图，几乎没有超过 2kb 的）</li>
+<li>图片无法以雪碧图的形式与其它小图结合（合成雪碧图仍是主要的减少 HTTP 请求的途径，Base64 是雪碧图的补充）</li>
+<li>图片的更新频率非常低（不需我们重复编码和修改文件内容，维护成本较低）</li>
+</ul>
+<h3 id="webP"><a href="#webP" class="headerlink" title="webP"></a>webP</h3><blockquote>
+<p>WebP 像 JPEG 一样对细节丰富的图片信手拈来，像 PNG 一样支持透明，像 GIF 一样可以显示动态图片——它集多种图片文件格式的优点于一身。</p>
+</blockquote>
+<p>WebP 纵有千般好，但它毕竟太年轻。我们知道，任何新生事物，都逃不开兼容性的大坑。兼容性现在还是不怎么友好，只有chrome（亲爹）兼容比较齐全。</p>
+<p>Safari 提示我们找不到，这也是情理之中。我们定位到刚刚示例的 WebP 图片所在的元素，查看一下它在 Safari 里的图片链接：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src=&quot;//img.alicdn.com/tps/i4/TB1CKSgIpXXXXccXXXX07tlTXXX-200-200.png_60x60.jpg&quot; alt=&quot;手机app - 聚划算&quot; class=&quot;app-icon&quot;&gt;</span><br></pre></td></tr></table></figure>
+<p>我们看到同样的一张图片，在 Safari 中的后缀从 .webp 变成了 .jpg！看来果然如此——站点确实是先进行了兼容性的预判，在浏览器环境支持 WebP 的情况下，优先使用 WebP 格式，否则就把图片降级为 JPG 格式（本质是对图片的链接地址作简单的字符串切割）。</p>
+<p>此外，还有另一个维护性更强、更加灵活的方案——把判断工作交给后端，由服务器根据 HTTP 请求头部的 ==Accept== 字段来决定返回什么格式的图片。当 Accept 字段包含 image/webp 时，就返回 WebP 格式的图片，否则返回原图。这种做法的好处是，当浏览器对 WebP 格式图片的兼容支持发生改变时，我们也不用再去更新自己的兼容判定代码，只需要服务端像往常一样对 Accept 字段进行检查即可。</p>
+        
+            <div class="readmore">
+                <a href="/2018/10/27/前端性能优化-上/" class="flat-box">READ MORE</a>
+            </div>
+        
+
+        
+            <div class="full-width auto-padding tags">
+                
+                    <a href="/tags/前端优化/"><i class="fa fa-tag fa-fw"></i>&nbsp;前端优化</a>
+                
+            </div>
+        
+    </section>
+</article>
+
+        </div>
+    
+        <div class='post-wrapper'>
+            <article class="post reveal ">
+    <section class="meta">
+        <h2 class="title">
             <a href="/2018/10/19/主流浏览器图片反防盗链方法总结/">
                 
                     主流浏览器图片反防盗链方法总结
@@ -540,6 +594,8 @@
                 
                     <li><a class="flat-box" href="/categories/websocket/"><div class='name'>websocket</div><div class='badge'>1</div></a></li>
                 
+                    <li><a class="flat-box" href="/categories/前端优化/"><div class='name'>前端优化</div><div class='badge'>1</div></a></li>
+                
                     <li><a class="flat-box" href="/categories/前端安全/"><div class='name'>前端安全</div><div class='badge'>1</div></a></li>
                 
             </ul>
@@ -553,7 +609,7 @@
     <section class='m_widget tagcloud'>
         <div class="header"><i class="fa fa-tags fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;标签</div>
         <div class='content'>
-            <a href="/tags/css/" style="font-size: 24px; color: #555">css</a> <a href="/tags/js/" style="font-size: 24px; color: #555">js</a> <a href="/tags/sockJs/" style="font-size: 14px; color: #999">sockJs</a> <a href="/tags/vue/" style="font-size: 24px; color: #555">vue</a> <a href="/tags/websocket/" style="font-size: 14px; color: #999">websocket</a> <a href="/tags/前端安全/" style="font-size: 14px; color: #999">前端安全</a>
+            <a href="/tags/css/" style="font-size: 24px; color: #555">css</a> <a href="/tags/js/" style="font-size: 24px; color: #555">js</a> <a href="/tags/sockJs/" style="font-size: 14px; color: #999">sockJs</a> <a href="/tags/vue/" style="font-size: 24px; color: #555">vue</a> <a href="/tags/websocket/" style="font-size: 14px; color: #999">websocket</a> <a href="/tags/前端优化/" style="font-size: 14px; color: #999">前端优化</a> <a href="/tags/前端安全/" style="font-size: 14px; color: #999">前端安全</a>
         </div>
     </section>
 
