@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Category: websocket | 叉烧的诞生</title>
+  <title>vue实现最多选择N个选项的方法 | 叉烧的诞生</title>
   <meta name="description" content="my blogs" />
   <meta name="keywords" content="" />
   <meta name="HandheldFriendly" content="True" />
@@ -134,73 +134,132 @@
     <div class="l_body">
     <div class='container clearfix'>
         <div class='l_main'>
+            <article id="post-vue实现最多选择N个选项的方法" class="post white-box article-type-post" itemscope itemprop="blogPost">
+    <section class='meta'>
+        <h1 class="title">
             
-    <script>
-        window.subData= { title:'category : websocket'}
-    </script>
-
-
-<section class="post-list">
-    
-    
-        <div class='post-wrapper'>
-            <article class="post reveal ">
-    <section class="meta">
-        <h2 class="title">
-            <a href="/2018/10/09/在vue中使用SockJS实现webSocket长连接通信的过程/">
-                
-                    在vue中使用SockJS实现webSocket长连接通信的过程
-                
-            </a>
-        </h2>
+                vue实现最多选择N个选项的方法
+            
+        </h1>
         <time>
-            2018-10-09
+            2018-11-21&nbsp;&nbsp;
+            <i class="fa fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
         </time>
         
     
     <div class='cats'>
-        <a href="/categories/websocket/">websocket</a>
+        <a href="/categories/vue/">vue</a>
     </div>
 
 
     </section>
 
     <section class="article typo">
-        <blockquote>
-<p>最近一个业务需求，需要和服务器端建立webSocket连接,从而实现消息的实时推送</p>
-</blockquote>
-<h3 id="socksjs"><a href="#socksjs" class="headerlink" title="socksjs"></a>socksjs</h3><ol>
-<li>客户端和服务器端api尽可能简洁，尽量靠近websocket api</li>
-<li>支持服务端扩展和负载均衡技术</li>
-<li>传输层应该全面支持跨域通信</li>
-<li>如果受到代理服务器的限制，传输层能优雅地从一种方式回退到另一种方式</li>
-<li>尽可能快地建立连接</li>
-<li>客户端只是纯粹的JavaScript，不需要flash</li>
-<li>客户端JavaScript必须经过严格的测试</li>
-<li>服务器端代码尽可能简单，降低用另一种语言重写server的代价</li>
-</ol>
-        
-            <div class="readmore">
-                <a href="/2018/10/09/在vue中使用SockJS实现webSocket长连接通信的过程/" class="flat-box">READ MORE</a>
-            </div>
-        
 
-        
-            <div class="full-width auto-padding tags">
-                
-                    <a href="/tags/websocket/"><i class="fa fa-tag fa-fw"></i>&nbsp;websocket</a>
-                
-                    <a href="/tags/sockJs/"><i class="fa fa-tag fa-fw"></i>&nbsp;sockJs</a>
-                
-            </div>
-        
-    </section>
-</article>
+        <div class="article-entry" itemprop="articleBody">
+            <blockquote>
+<p>做这个需求被数组的问题困扰许久，之前想当然的把总的数据当成一个数组，选中的元素是一个数组，后面越整越复杂，把自己绕进去了。最后静下心来想一下，发现了个简洁的骚操作，就是在原来的数组基础上，循环为每一项加上selectedStatus属性，并且把选中的选项添加到一个数组中（obj.selectedArr）。这样无论以后是单选还是多选，只需传递不同的参数就能达到目的，此方法默认是多选</p>
+</blockquote>
+<a id="more"></a>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">//item 对象</span><br><span class="line">//obj 对象数组</span><br><span class="line">//type默认传2代表多选，传1代表单选</span><br><span class="line">//max 默认传3代表最多选择3项，如果type参数传1，那max传什么都无所谓了</span><br><span class="line">selectedItem(item,obj,type=2，max=3)&#123;</span><br><span class="line">        obj.map((ele,index)=&gt; &#123;</span><br><span class="line">          if(!ele.selectedStatus)&#123;</span><br><span class="line">            this.$set(ele,&apos;selectedStatus&apos;);</span><br><span class="line">            ele.selectedStatus = false;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        if(type==1)&#123;</span><br><span class="line">          obj.map((ele,index) =&gt; &#123;</span><br><span class="line">            ele.selectedStatus = false;</span><br><span class="line">          &#125;);</span><br><span class="line">          if(item.selectedStatus==false)&#123;</span><br><span class="line">            obj.selectedItem=item;</span><br><span class="line">          &#125;else&#123;</span><br><span class="line">            obj.selectedItem=&apos;&apos;;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">          obj.map((ele,index) =&gt; &#123;</span><br><span class="line">            ele.selectedStatus = ele.selectedStatus?ele.selectedStatus:false;</span><br><span class="line">          &#125;);</span><br><span class="line">          obj.selectedArr=obj.selectedArr?obj.selectedArr:new Array();</span><br><span class="line">          let index=obj.selectedArr.indexOf(item);</span><br><span class="line">          if(obj.selectedArr.length==max)&#123;</span><br><span class="line">            if(item.selectedStatus==false)&#123;</span><br><span class="line">              obj.selectedArr[max-1].selectedStatus=false;</span><br><span class="line">              obj.selectedArr[max-1]=item;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">              //obj.selectedArr[index].selectedStatus=false;</span><br><span class="line">              obj.selectedArr.splice(index,1);</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;else&#123;</span><br><span class="line">            if(item.selectedStatus==false)&#123;</span><br><span class="line">              obj.selectedArr.push(item);</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">              obj.selectedArr.splice(index,1);</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        item.selectedStatus =! item.selectedStatus;</span><br><span class="line">      &#125;,</span><br></pre></td></tr></table></figure>
+<p>obj实参示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">[&#123;flag: &quot;https://oss.meiyi.ai/upload/image/201707/e9b4d059-b5a0-4e39-b3c3-5a41f5dbe232.jpg&quot;, id: 1,…&#125;</span><br><span class="line">flag: &quot;https://oss.meiyi.ai/upload/image/201707/e9b4d059-b5a0-4e39-b3c3-5a41f5dbe232.jpg&quot;</span><br><span class="line">id: 1</span><br><span class="line">name: &quot;美国&quot;</span><br><span class="line">value: 2</span><br><span class="line">&#125;,</span><br><span class="line">&#123;flag: &quot;https://oss.meiyi.ai/upload/image/201707/9de126a8-fbf7-4e97-ad4f-ad388bd9fdbc.jpg&quot;, id: 2,…&#125;</span><br><span class="line">flag: &quot;https://oss.meiyi.ai/upload/image/201707/9de126a8-fbf7-4e97-ad4f-ad388bd9fdbc.jpg&quot;</span><br><span class="line">id: 2</span><br><span class="line">name: &quot;加拿大&quot;</span><br><span class="line">value: 4</span><br><span class="line">&#125;,</span><br><span class="line">&#123;flag: &quot;https://oss.meiyi.ai/upload/image/201707/0e8ade2a-de71-4f0d-9ce5-b348a76e0598.jpg&quot;, id: 3,…&#125;</span><br><span class="line">flag: &quot;https://oss.meiyi.ai/upload/image/201707/0e8ade2a-de71-4f0d-9ce5-b348a76e0598.jpg&quot;</span><br><span class="line">id: 3</span><br><span class="line">name: &quot;澳大利亚&quot;</span><br><span class="line">value: 5</span><br><span class="line">&#125;,</span><br><span class="line">&#123;flag: &quot;https://oss.meiyi.ai/upload/image/201707/252884fe-ef95-49e2-99b1-a8220fc76679.jpg&quot;, id: 4,…&#125;</span><br><span class="line">flag: &quot;https://oss.meiyi.ai/upload/image/201707/252884fe-ef95-49e2-99b1-a8220fc76679.jpg&quot;</span><br><span class="line">id: 4</span><br><span class="line">name: &quot;新西兰&quot;</span><br><span class="line">value: 7</span><br><span class="line">&#125;,</span><br><span class="line">&#123;flag: &quot;https://oss.meiyi.ai/upload/image/201801/fc3adbf0-5f87-4608-aee3-38711b610a76.jpg&quot;, id: 5,…&#125;</span><br><span class="line">flag: &quot;https://oss.meiyi.ai/upload/image/201801/fc3adbf0-5f87-4608-aee3-38711b610a76.jpg&quot;</span><br><span class="line">id: 5</span><br><span class="line">name: &quot;西班牙&quot;</span><br><span class="line">value: 10</span><br><span class="line">&#125;]</span><br></pre></td></tr></table></figure></p>
+<p>使用方法：</p>
+<ul>
+<li>单选：selectedItem（item,obj,1）</li>
+<li>多选(最多选5项)：selectedItem（item,obj,2,5）;</li>
+</ul>
 
         </div>
-    
-</section>
 
+        
+            <div class="article-tags tags">
+                
+                    <a href="/tags/vue/"><i class="fa fa-tag fa-fw" aria-hidden="true"></i>&nbsp;vue</a>
+                
+            </div>
+        
+
+        
+            <div class="prev-next">
+                
+                
+                    <section class="next">
+                        <span class="art-item-right" aria-hidden="true">
+                            <h6>下一篇&nbsp;<i class="fa fa-chevron-right" aria-hidden="true"></i></h6>
+                            <h4>
+                                <a href="/2018/10/27/前端性能优化-上/" rel="prev" title="前端性能优化(上)">
+                                    
+                                        前端性能优化(上)
+                                    
+                                </a>
+                            </h4>
+                            
+                                <h6 class="tags">
+                                    
+                                        <i class="fa fa-tag fa-fw"></i>前端优化
+                                    
+                                </h6>
+                            
+                        </span>
+                    </section>
+                
+            </div>
+        
+
+    </section>
+
+</article>
+
+<br>
+
+<!-- 显示推荐文章和评论 -->
+
+    <article class="post white-box comments">
+        <section class="article typo">
+
+            
+                
+
+    <div class="recommended_posts">
+        <h4><i class="fa fa-bookmark fa-fw" aria-hidden="true"></i>&nbsp;你可能感兴趣的文章</h4>
+        <ul>
+            
+                <li><a href="http://yoursite.com/2018/10/27/前端性能优化-上/">前端性能优化(上)</a></li>
+            
+                <li><a href="http://yoursite.com/2018/10/19/主流浏览器图片反防盗链方法总结/">主流浏览器图片反防盗链方法总结</a></li>
+            
+                <li><a href="http://yoursite.com/2018/10/11/module替代scopet/">module替代scopet</a></li>
+            
+                <li><a href="http://yoursite.com/2018/10/10/documentFragment对象/">documentFragment对象</a></li>
+            
+                <li><a href="http://yoursite.com/2018/10/09/在vue中使用SockJS实现webSocket长连接通信的过程/">在vue中使用SockJS实现webSocket长连接通信的过程</a></li>
+            
+        </ul>
+    </div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+
+
+            
+
+            
+
+                
+
+                
+
+                
+            
+
+        </section>
+    </article>
+
+
+<script>
+    window.subData = {
+        title: 'vue实现最多选择N个选项的方法',
+        tools: true
+    }
+</script>
 
 
         </div>
@@ -447,6 +506,10 @@
 <script src="/js/search.js"></script>
 <script src="/js/app.js"></script>
 
+
+    
+    
+    
 
 
     <script>setLoadingBarProgress(100);</script>
