@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>Category: 前端安全 | 叉烧范</title>
+  <title>Archives: 2018/12 | 叉烧范</title>
   <meta name="description" content="my blogs" />
   <meta name="keywords" content="" />
   <meta name="HandheldFriendly" content="True" />
@@ -135,8 +135,9 @@
     <div class='container clearfix'>
         <div class='l_main'>
             
+	
     <script>
-        window.subData= { title:'category : 前端安全'}
+        window.subData= { title:'year : 2018.12'}
     </script>
 
 
@@ -147,37 +148,37 @@
             <article class="post reveal ">
     <section class="meta">
         <h2 class="title">
-            <a href="/2018/10/19/主流浏览器图片反防盗链方法总结/">
+            <a href="/2018/12/08/filter、map、some、every等常用js数组方法/">
                 
-                    主流浏览器图片反防盗链方法总结
+                    filter、map、some、every等常用js数组方法
                 
             </a>
         </h2>
         <time>
-            2018-10-19
+            2018-12-08
         </time>
         
     
     <div class='cats'>
-        <a href="/categories/前端安全/">前端安全</a>
+        <a href="/categories/js/">js</a>
     </div>
 
 
     </section>
 
     <section class="article typo">
-        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>还记得之前写的那个无聊的插件，前一段时间由于豆瓣读书增加了防盗链策略使得我们无法直接引用他们的图片，使得我这个小插件无法工作。本以为是一个很简单的问题，但是没想到这个小问题硬是让我改了五六遍才改好，可以说是非常的蠢了。总结一下自己犯傻的原因，还是由于自己懒得去深入研究，谷歌百度了问题就直接把方案拿来用了，浅尝辄止人云亦云，解决了表面的问题而没有深入的总结。当然，从另外一个方面讲，我也是初步领会到了前端程序员面对要兼容各种浏览器的需求时头有多大了。</p>
-<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>问题很简单，就是我希望在自己的页面里用<img src="xxxx">来引用其他网站的一张图片，但是他的网站设置了防盗链的策略，会在后台判断请求的Referrer属性是不是来自于一个非本域名的网站，如果来源不是本域名就返回403 forbidden。我的目的就是用最方便的方法使得我的页面能够不受他的防盗链策略的影响。</p>
+        <h3 id="filter"><a href="#filter" class="headerlink" title="filter():"></a>filter():</h3><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var filteredArray = array.filter(callback[, thisObject]);</span><br></pre></td></tr></table></figure></p>
+<p>用法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//过滤掉小于 10 的数组元素：</span><br><span class="line"></span><br><span class="line">//代码：</span><br><span class="line">function isBigEnough(element, index, array) &#123;</span><br><span class="line">    return (element &gt;= 10);</span><br><span class="line">&#125;</span><br><span class="line">var filtered = [12, 5, 8, 130, 44].filter(isBigEnough);</span><br><span class="line">// 12, 130, 44</span><br><span class="line">//结果：[12, 5, 8, 130, 44].filter(isBigEnough) ： 12, 130, 44</span><br></pre></td></tr></table></figure></p>
         
             <div class="readmore">
-                <a href="/2018/10/19/主流浏览器图片反防盗链方法总结/" class="flat-box">READ MORE</a>
+                <a href="/2018/12/08/filter、map、some、every等常用js数组方法/" class="flat-box">READ MORE</a>
             </div>
         
 
         
             <div class="full-width auto-padding tags">
                 
-                    <a href="/tags/前端安全/"><i class="fa fa-tag fa-fw"></i>&nbsp;前端安全</a>
+                    <a href="/tags/js/"><i class="fa fa-tag fa-fw"></i>&nbsp;js</a>
                 
             </div>
         
@@ -187,6 +188,8 @@
         </div>
     
 </section>
+
+
 
 
 

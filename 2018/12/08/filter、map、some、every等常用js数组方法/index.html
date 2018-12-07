@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>module替代scopet | 叉烧范</title>
+  <title>filter、map、some、every等常用js数组方法 | 叉烧范</title>
   <meta name="description" content="my blogs" />
   <meta name="keywords" content="" />
   <meta name="HandheldFriendly" content="True" />
@@ -134,21 +134,21 @@
     <div class="l_body">
     <div class='container clearfix'>
         <div class='l_main'>
-            <article id="vue中使用css-module替代scopet" class="post white-box article-type-vue中使用css" itemscope itemprop="blogPost">
+            <article id="post-filter、map、some、every等常用js数组方法" class="post white-box article-type-post" itemscope itemprop="blogPost">
     <section class='meta'>
         <h1 class="title">
             
-                module替代scopet
+                filter、map、some、every等常用js数组方法
             
         </h1>
         <time>
-            2018-10-11&nbsp;&nbsp;
+            2018-12-08&nbsp;&nbsp;
             <i class="fa fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
         </time>
         
     
     <div class='cats'>
-        <a href="/categories/vue/">vue</a>, <a href="/categories/vue/css/">css</a>
+        <a href="/categories/js/">js</a>
     </div>
 
 
@@ -157,61 +157,28 @@
     <section class="article typo">
 
         <div class="article-entry" itemprop="articleBody">
-            <h3 id="关于CSS-Module"><a href="#关于CSS-Module" class="headerlink" title="关于CSS Module"></a>关于CSS Module</h3><p>css modules是一种流行的模块化和组合CSS的系统。 vue-loader提供了与css modules的集成，作为scope CSS的替代方案。<br>vue引入scopet，有缺陷的样式私有化</p>
-<p>最开始的时候，我们提倡并大量使用的是scoped这种技术<br>在vue组件中，为了使样式私有化（模块化），不对全局造成污染，可以在style标签上添加scoped属性，以表示它的只属于当下的模块，这是一个非常好的举措。</p>
+            <h3 id="filter"><a href="#filter" class="headerlink" title="filter():"></a>filter():</h3><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var filteredArray = array.filter(callback[, thisObject]);</span><br></pre></td></tr></table></figure></p>
+<p>用法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//过滤掉小于 10 的数组元素：</span><br><span class="line"></span><br><span class="line">//代码：</span><br><span class="line">function isBigEnough(element, index, array) &#123;</span><br><span class="line">    return (element &gt;= 10);</span><br><span class="line">&#125;</span><br><span class="line">var filtered = [12, 5, 8, 130, 44].filter(isBigEnough);</span><br><span class="line">// 12, 130, 44</span><br><span class="line">//结果：[12, 5, 8, 130, 44].filter(isBigEnough) ： 12, 130, 44</span><br></pre></td></tr></table></figure></p>
 <a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@media (min-width: 250px) &#123;</span><br><span class="line">.list-container:hover &#123;</span><br><span class="line">background: orange;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这个可选 scoped 属性会自动添加一个唯一的属性 (比如 data-v-21e5b78) 为组件内 CSS 指定作用域<br>编译的时候 .list-container:hover 会被编译成类似 .list-container[data-v-21e5b78]:hover</p>
-<p>但是，它并不能完全避免冲突<br>如果用户在不同的父子级，定义了一个重复的类名，会影响到所有定义为errShow类名的组件的显示<br>并且它会造成一种后果，每个样式的权重加重了：<br>理论上我们要去修改这个样式，需要更高的权重去覆盖这个样式。<br>这是增加复杂度的其中一个维度。</p>
-<p>CSS modules则做的更好，它不是添加属性，而是直接改变类名</p>
-<p>SS Modules既不是官方标准，也不是浏览器的特性，而是在构建步骤中对CSS类名选择器限定作用域的一种方式（通过hash实现类似于命名空间的方法）。</p>
-<p>类名是动态生成的，唯一的，并准确对应到源文件中的各个类的样式。<br>实际上，CSS Modules只是CSS模块化的一种方式。为什么我们需要CSS模块化呢？</p>
-<p>CSS的规则都是全局的，任何一个组件的样式规则，都对整个页面有效。于是，亟待解决的就是样式冲突（污染）的问题。一般地，为了解决冲突，会把class命名写长一点，降低冲突几率；加上父元素的选择器，来限制范围等……</p>
-<h3 id="CSS模块化就是来解决这个问题的，一般地，分为三类"><a href="#CSS模块化就是来解决这个问题的，一般地，分为三类" class="headerlink" title="CSS模块化就是来解决这个问题的，一般地，分为三类"></a>CSS模块化就是来解决这个问题的，一般地，分为三类</h3><ol>
-<li>　　命名约定类</li>
-</ol>
-<p>　　该类CSS模块化方案主要用来规范CSS命名，最常见的是BEM，当然还有OOCSS等，在构建工具出现之前，大多数都是在CSS命名上做文章</p>
-<ol start="2">
-<li>　　CSS in JS</li>
-</ol>
-<p>　　彻底抛弃CSS，用javascript来写CSS规则，常见的有styled-components</p>
-<ol start="3">
-<li>　　使用JS来管理样式</li>
-</ol>
-<p>　　使用JS编译原生的CSS文件，使其具备模块化的能力，最常见的就是CSS Modules</p>
-<p>　　随着构建工具的兴起，越来越多的人开始使用后两者方案，书写CSS时，不用再特意地关心样式冲突问题。只需要使用约定的格式编写代码即可
-　　</p>
-<h3 id="VUE的CSS-Module写法"><a href="#VUE的CSS-Module写法" class="headerlink" title="VUE的CSS Module写法"></a>VUE的CSS Module写法</h3><ul>
-<li>使用时需要进行添加v-bind，如样式绑定简写 :class<br>-<br>① 在style标签中添加module属性，表示打开CSS-loader的模块模式</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;style module&gt;</span><br><span class="line">.red &#123;color: red;&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
-<p>② 在模板中使用动态类绑定 :class ，并在类名前面加上 $style.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;p :class=&quot;$style.red&quot;&gt;</span><br><span class="line">    This should be red</span><br><span class="line">  &lt;/p&gt;</span><br><span class="line">&lt;/template&gt;</span><br></pre></td></tr></table></figure>
-<p>③ 如果类名包含中划线，则使用中括号语法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;h4 :class=&quot;$style[&apos;header-tit&apos;]&quot;&gt;类别推荐&lt;/h4&gt;</span><br></pre></td></tr></table></figure>
-<p>④ 也可以使用数组或对象语法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;p :class=&quot;&#123; [$style.red]: isRed &#125;&quot;&gt;</span><br><span class="line">      Am I red?</span><br><span class="line">&lt;/p&gt;</span><br><span class="line">&lt;p :class=&quot;[$style.red, $style.bold]&quot;&gt;</span><br><span class="line">      Red and bold</span><br><span class="line">&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-<p>　　<br>⑤ 更复杂的对象语法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul</span><br><span class="line">　　　 :class=&quot;&#123;</span><br><span class="line">    [$style.panelBox]:true,</span><br><span class="line">    [$style.transitionByPanelBox]:needTransition</span><br><span class="line">  &#125;&quot;</span><br></pre></td></tr></table></figure>
-<p>⑥ 更复杂的数组语法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;li</span><br><span class="line">      :class=&quot;[</span><br><span class="line">        $style[&apos;aside-item&apos;],</span><br><span class="line">        &#123;[$style[&apos;aside-item_active&apos;]]:(i === index)&#125;</span><br><span class="line">      ]&quot;</span><br></pre></td></tr></table></figure>
-<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><blockquote>
-<p>css-loader关于CSS modules的默认配置如下</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  modules: true,</span><br><span class="line">  importLoaders: 1,</span><br><span class="line">  localIdentName: &apos;[hash:base64]&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="map"><a href="#map" class="headerlink" title="map():"></a>map():</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//将所有的数组元素转换为大写：</span><br><span class="line"></span><br><span class="line">var strings = [&quot;hello&quot;, &quot;Array&quot;, &quot;WORLD&quot;];</span><br><span class="line">function makeUpperCase(v)</span><br><span class="line">&#123;</span><br><span class="line">    return v.toUpperCase();</span><br><span class="line">&#125;</span><br><span class="line">var uppers = strings.map(makeUpperCase);</span><br><span class="line">// uppers is now [&quot;HELLO&quot;, &quot;ARRAY&quot;, &quot;WORLD&quot;]</span><br><span class="line">// strings is unchanged</span><br><span class="line">//结果：[&quot;hello&quot;, &quot;Array&quot;, &quot;WORLD&quot;].map(makeUpperCase) ： HELLO, ARRAY, WORLD</span><br></pre></td></tr></table></figure>
+<h3 id="some"><a href="#some" class="headerlink" title="some():"></a>some():</h3><p>对数组中的每个元素都执行一次指定的函数（callback），直到此函数返回 true，如果发现这个元素，some 将返回 true，如果回调函数对每个元素执行后都返回 false ，some 将返回 false。它只对数组中的非空元素执行指定的函数，没有赋值或者已经删除的元素将被忽略。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//检查是否有数组元素大于等于10：</span><br><span class="line"></span><br><span class="line">function isBigEnough(element, index, array) &#123;</span><br><span class="line">    return (element &gt;= 10);</span><br><span class="line">&#125;</span><br><span class="line">var passed = [2, 5, 8, 1, 4].some(isBigEnough);</span><br><span class="line">// passed is false</span><br><span class="line">passed = [12, 5, 8, 1, 4].some(isBigEnough);</span><br><span class="line">// passed is true</span><br><span class="line">//结果：</span><br><span class="line">//[2, 5, 8, 1, 4].some(isBigEnough) ： false</span><br><span class="line">//[12, 5, 8, 1, 4].some(isBigEnough) ： true</span><br></pre></td></tr></table></figure></p>
+<h3 id="every"><a href="#every" class="headerlink" title="every():"></a>every():</h3><p>对数组中的每个元素都执行一次指定的函数（callback），直到此函数返回 false，如果发现这个元素，every 将返回 false，如果回调函数对每个元素执行后都返回 true ，every 将返回 true。它只对数组中的非空元素执行指定的函数，没有赋值或者已经删除的元素将被忽略<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">//测试是否所有数组元素都大于等于10：</span><br><span class="line"></span><br><span class="line">function isBigEnough(element, index, array) &#123;</span><br><span class="line">    return (element &gt;= 10);</span><br><span class="line">&#125;</span><br><span class="line">var passed = [12, 5, 8, 130, 44].every(isBigEnough);</span><br><span class="line">// passed is false</span><br><span class="line">passed = [12, 54, 18, 130, 44].every(isBigEnough);</span><br><span class="line">// passed is true</span><br><span class="line">//结果：</span><br><span class="line">//[12, 5, 8, 130, 44].every(isBigEnough) 返回 ： false</span><br><span class="line">//[12, 54, 18, 130, 44].every(isBigEnough) 返回 ： true</span><br></pre></td></tr></table></figure></p>
+<h3 id="forEach"><a href="#forEach" class="headerlink" title="forEach():"></a>forEach():</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//打印数组内容：</span><br><span class="line"></span><br><span class="line">function printElt(element, index, array) &#123;</span><br><span class="line">    document.writeln(&quot;[&quot; + index + &quot;] is &quot; + element + &quot;&lt;br /&gt;&quot;);</span><br><span class="line">&#125;</span><br><span class="line">[2, 5, 9].forEach(printElt);</span><br><span class="line">// Prints:</span><br><span class="line">// [0] is 2</span><br><span class="line">// [1] is 5</span><br><span class="line">// [2] is 9</span><br><span class="line">//结果：</span><br><span class="line">//[0] is 2</span><br><span class="line">//[1] is 5</span><br><span class="line">//[2] is 9</span><br></pre></td></tr></table></figure>
+<h3 id="indexOf-和-lastIndexOf的区别"><a href="#indexOf-和-lastIndexOf的区别" class="headerlink" title="indexOf 和 lastIndexOf的区别"></a>indexOf 和 lastIndexOf的区别</h3><h4 id="indexOf"><a href="#indexOf" class="headerlink" title="indexOf():"></a>indexOf():</h4><p>indexOf 是查某个指定的字符串在字符串首次出现的位置（索引值） （也就是从前往后查）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//查找符合条件的元素：</span><br><span class="line"></span><br><span class="line">var array = [2, 5, 9];</span><br><span class="line">var index = array.indexOf(2);</span><br><span class="line">// index is 0</span><br><span class="line">index = array.indexOf(7);</span><br><span class="line">// index is -1</span><br><span class="line">//结果：</span><br><span class="line">//[2, 5, 9].indexOf(2) ： 0</span><br><span class="line">//[2, 5, 9].indexOf(7) ： -1</span><br></pre></td></tr></table></figure></p>
+<h4 id="lastIndexOf"><a href="#lastIndexOf" class="headerlink" title="lastIndexOf():"></a>lastIndexOf():</h4><p>lastIndexOf 是从右向左查某个指定的字符串在字符串中最后一次出现的位置（也就是从后往前查）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//查找符合条件的元素：</span><br><span class="line"></span><br><span class="line">var array = [2, 5, 9, 2];</span><br><span class="line">var index = array.lastIndexOf(2);</span><br><span class="line">// index is 3</span><br><span class="line">index = array.lastIndexOf(7);</span><br><span class="line">// index is -1</span><br><span class="line">index = array.lastIndexOf(2, 3);</span><br><span class="line">// index is 3</span><br><span class="line">index = array.lastIndexOf(2, 2);</span><br><span class="line">// index is 0</span><br><span class="line">index = array.lastIndexOf(2, -2);</span><br><span class="line">// index is 0</span><br><span class="line">index = array.lastIndexOf(2, -1);</span><br><span class="line">// index is 3</span><br><span class="line">//结果：</span><br><span class="line">//[2, 5, 9, 2].lastIndexOf(2) ： 3</span><br><span class="line">//[2, 5, 9, 2].lastIndexOf(7) ： -1</span><br><span class="line">//[2, 5, 9, 2].lastIndexOf(2, 3) ： 3</span><br><span class="line">//[2, 5, 9, 2].lastIndexOf(2, 2) ： 0</span><br><span class="line">//[2, 5, 9, 2].lastIndexOf(2, -2) ： 0</span><br><span class="line">//[2, 5, 9, 2].lastIndexOf(2, -1) ： 3</span><br></pre></td></tr></table></figure></p>
+<p>那么问题来了 两个不是一前一后相反方向还是查么？怎么他们两个返回的索引值相同呢？<br>　　because：lastIndexOf()方法虽然是从后往前搜索，但返回的位置是从前开始数数和计算的，所以结果和indexOf()方法返回的相同</p>
 <blockquote>
-<p>可以使用vue-loader的cssModules选项为css-loader进行自定义的配置</p>
+<p>总结：</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">module: &#123;</span><br><span class="line">  rules: [</span><br><span class="line">    &#123;</span><br><span class="line">      test: &apos;\.vue$&apos;,</span><br><span class="line">      loader: &apos;vue-loader&apos;,</span><br><span class="line">      options: &#123;</span><br><span class="line">        cssModules: &#123;</span><br><span class="line">          localIdentName: &apos;[path][name]---[local]---[hash:base64:5]&apos;,</span><br><span class="line">          camelCase: true</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>　　　当数组（字符串）中所要查询的数（字符串/字符）在字符串（数组）中只出现一次的时候 二者返回的索引值相同<br>　　　当数组（字符串）中所要查询的数（字符串/字符）在字符串（数组）中出现两次及以上的时候<br>　　　　　　indexOf  返回的是 valuesearch 第一次在数组（字符串）出现的位置（从左往右）<br>　　　　　　lastIndexOf 返回的是 valuesearch 最后一次在数组（字符串）出现的位置（从左往右）只不过查询的方向不同而已　　</p>
+<hr>
 
         </div>
 
         
             <div class="article-tags tags">
                 
-                    <a href="/tags/css/"><i class="fa fa-tag fa-fw" aria-hidden="true"></i>&nbsp;css</a>
-                
-                    <a href="/tags/vue/"><i class="fa fa-tag fa-fw" aria-hidden="true"></i>&nbsp;vue</a>
+                    <a href="/tags/js/"><i class="fa fa-tag fa-fw" aria-hidden="true"></i>&nbsp;js</a>
                 
             </div>
         
@@ -219,41 +186,21 @@
         
             <div class="prev-next">
                 
-                    <section class="prev" >
-                        <span class="art-item-left">
-                            <h6><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;上一篇</h6>
-                            <h4>
-                                <a href="/2018/10/19/主流浏览器图片反防盗链方法总结/" rel="prev" title="主流浏览器图片反防盗链方法总结">
-                                  
-                                      主流浏览器图片反防盗链方法总结
-                                  
-                                </a>
-                            </h4>
-                            
-                                <h6 class="tags">
-                                    
-                                        <i class="fa fa-tag fa-fw"></i>前端安全
-                                    
-                                </h6>
-                            
-                        </span>
-                    </section>
-                
                 
                     <section class="next">
                         <span class="art-item-right" aria-hidden="true">
                             <h6>下一篇&nbsp;<i class="fa fa-chevron-right" aria-hidden="true"></i></h6>
                             <h4>
-                                <a href="/2018/10/10/documentFragment对象/" rel="prev" title="documentFragment对象">
+                                <a href="/2018/11/21/vue实现最多选择N个选项的方法/" rel="prev" title="vue实现最多选择N个选项的方法">
                                     
-                                        documentFragment对象
+                                        vue实现最多选择N个选项的方法
                                     
                                 </a>
                             </h4>
                             
                                 <h6 class="tags">
                                     
-                                        <i class="fa fa-tag fa-fw"></i>js
+                                        <i class="fa fa-tag fa-fw"></i>vue
                                     
                                 </h6>
                             
@@ -281,15 +228,15 @@
         <h4><i class="fa fa-bookmark fa-fw" aria-hidden="true"></i>&nbsp;你可能感兴趣的文章</h4>
         <ul>
             
+                <li><a href="http://yoursite.com/2018/11/21/vue实现最多选择N个选项的方法/">vue实现最多选择N个选项的方法</a></li>
+            
                 <li><a href="http://yoursite.com/2018/10/27/前端性能优化-上/">前端性能优化(上)</a></li>
             
                 <li><a href="http://yoursite.com/2018/10/19/主流浏览器图片反防盗链方法总结/">主流浏览器图片反防盗链方法总结</a></li>
             
+                <li><a href="http://yoursite.com/2018/10/11/module替代scopet/">module替代scopet</a></li>
+            
                 <li><a href="http://yoursite.com/2018/10/10/documentFragment对象/">documentFragment对象</a></li>
-            
-                <li><a href="http://yoursite.com/2018/10/09/在vue中使用SockJS实现webSocket长连接通信的过程/">在vue中使用SockJS实现webSocket长连接通信的过程</a></li>
-            
-                <li><a href="http://yoursite.com/2018/10/08/vue中slot的使用/">vue中slot的使用</a></li>
             
         </ul>
     </div>
@@ -313,7 +260,7 @@
 
 <script>
     window.subData = {
-        title: 'module替代scopet',
+        title: 'filter、map、some、every等常用js数组方法',
         tools: true
     }
 </script>
@@ -469,7 +416,7 @@
     <section class='m_widget toc-wrapper'>
         <div class="header"><i class="fa fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;目录</div>
         <div class='content'>
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#关于CSS-Module"><span class="toc-text">关于CSS Module</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS模块化就是来解决这个问题的，一般地，分为三类"><span class="toc-text">CSS模块化就是来解决这个问题的，一般地，分为三类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VUE的CSS-Module写法"><span class="toc-text">VUE的CSS Module写法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置"><span class="toc-text">配置</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#filter"><span class="toc-text">filter():</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#map"><span class="toc-text">map():</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#some"><span class="toc-text">some():</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#every"><span class="toc-text">every():</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#forEach"><span class="toc-text">forEach():</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#indexOf-和-lastIndexOf的区别"><span class="toc-text">indexOf 和 lastIndexOf的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#indexOf"><span class="toc-text">indexOf():</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#lastIndexOf"><span class="toc-text">lastIndexOf():</span></a></li></ol></li></ol>
         </div>
     </section>
 
