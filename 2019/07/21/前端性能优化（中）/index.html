@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
-  <title>在vue中使用SockJS实现webSocket长连接通信的过程 | 叉烧范</title>
+  <title>前端性能优化（中） | 叉烧范</title>
   <meta name="description" content="my blogs" />
   <meta name="keywords" content="" />
   <meta name="HandheldFriendly" content="True" />
@@ -134,21 +134,21 @@
     <div class="l_body">
     <div class='container clearfix'>
         <div class='l_main'>
-            <article id="post-在vue中使用SockJS实现webSocket长连接通信的过程" class="post white-box article-type-post" itemscope itemprop="blogPost">
+            <article id="post-前端性能优化（中）" class="post white-box article-type-post" itemscope itemprop="blogPost">
     <section class='meta'>
         <h1 class="title">
             
-                在vue中使用SockJS实现webSocket长连接通信的过程
+                前端性能优化（中）
             
         </h1>
         <time>
-            2018-10-09&nbsp;&nbsp;
+            2019-07-21&nbsp;&nbsp;
             <i class="fa fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
         </time>
         
     
     <div class='cats'>
-        <a href="/categories/websocket/">websocket</a>
+        <a href="/categories/前端优化/">前端优化</a>
     </div>
 
 
@@ -157,49 +157,67 @@
     <section class="article typo">
 
         <div class="article-entry" itemprop="articleBody">
-            <blockquote>
-<p>最近一个业务需求，需要和服务器端建立webSocket连接,从而实现消息的实时推送</p>
+            <h3 id="客户端渲染"><a href="#客户端渲染" class="headerlink" title="客户端渲染"></a>客户端渲染</h3><blockquote>
+<p>客户端渲染模式下，服务端会把渲染需要的静态文件发送给客户端，客户端加载过来之后，自己在浏览器里跑一遍 JS，根据 JS 的运行结果，生成相应的 DOM。这种特性使得客户端渲染的源代码总是特别简洁</p>
 </blockquote>
-<h3 id="socksjs"><a href="#socksjs" class="headerlink" title="socksjs"></a>socksjs</h3><ol>
-<li>客户端和服务器端api尽可能简洁，尽量靠近websocket api</li>
-<li>支持服务端扩展和负载均衡技术</li>
-<li>传输层应该全面支持跨域通信</li>
-<li>如果受到代理服务器的限制，传输层能优雅地从一种方式回退到另一种方式</li>
-<li>尽可能快地建立连接</li>
-<li>客户端只是纯粹的JavaScript，不需要flash</li>
-<li>客户端JavaScript必须经过严格的测试</li>
-<li>服务器端代码尽可能简单，降低用另一种语言重写server的代价</li>
-</ol>
-<a id="more"></a>
-<h3 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h3><blockquote>
-<p>要进行文章中的代码的测试,需要服务端端开发人员配合你,提供相关的通信接口.来完成客户端和服务端的通信.实现通信,我们需要用到另个模块 sockjs-client 模块和 stomjs 模块,接下来我会先对这两个模块做一个简单的介绍.</p>
+<p>页面上呈现的内容，你在 html 源文件里找不到——这正是它的特点。</p>
+<h3 id="服务端渲染"><a href="#服务端渲染" class="headerlink" title="服务端渲染"></a>服务端渲染</h3><blockquote>
+<p>服务端渲染的模式下，当用户第一次请求页面时，由服务器把需要的组件或页面渲染成 HTML 字符串，然后把它返回给客户端。客户端拿到手的，是可以直接渲染然后呈现给用户的 HTML 内容，不需要为了生成 DOM 内容自己再去跑一遍 JS 代码。</p>
 </blockquote>
-<h3 id="关于实时通信"><a href="#关于实时通信" class="headerlink" title="关于实时通信"></a>关于实时通信</h3><ol>
-<li>ajax轮询 ajax轮询的原理非常简单,让浏览器每隔几秒就像服务器发送一个请求,询问服务器是否有新的信息.</li>
-<li>http 长轮询 长轮询的机制和ajax轮询差不多,都是采用轮询的方式,不过才去的是阻塞模型(一直打电话,没收到就不挂电话),也就是说,客户端发起链接后,如果没有消息,就一直不返回response给客户端.知道有新的消息才返回,返回完之后,客户端再此建立连接,周而复始.</li>
-<li>WebSocket WebSocket是HTML5开始提供的一种在单个TCP连接上进行全双工通讯的协议.在WebSocket API中，浏览器和服务器只需要做一个握手的动作，然后，浏览器和服务器之间就形成了一条快速通道。两者之间就直接可以数据互相传送,不需要繁琐的询问和等待. 从上面的介绍很容易看出来,ajax轮询和长轮询都是非常耗费资源的,ajax轮询需要服务器有很快的处理速度和资源,http长轮询需要有很高的并发,也就是同时接待客户的能力.而WebSocket,只需要经过一次HTTP请求,就可以与服务端进行源源不断的消息收发了.</li>
-</ol>
-<h3 id="sockjs-client"><a href="#sockjs-client" class="headerlink" title="sockjs-client"></a>sockjs-client</h3><p>sockjs-client 是从SockJS中分离出来的用于客户端使用的通信模块.所以我们就直接来看看SockJS. SockJS是一个浏览器的JavaScript库,它提供了一个类似于网络的对象,SockJS提供了一个连贯的,跨浏览器的JavaScriptAPI,它在浏览器和Web服务器之间创建了一个低延迟,全双工,跨域通信通道. 你可能会问,我为什么不直接用原生的WebSocket而要使用SockJS呢?这得益于SockJS的一大特性,一些浏览器中缺少对WebSocket的支持,因此，回退选项是必要的，而Spring框架提供了基于SockJS协议的透明的回退选项。SockJS提供了浏览器兼容性,优先使用原生的WebSocket,如果某个浏览器不支持WebSocket,SockJS会自动降级为轮询.</p>
-<h3 id="stomjs"><a href="#stomjs" class="headerlink" title="stomjs"></a>stomjs</h3><p>STOMP(Simple Text-Orientated Messaging Protocol) 面向消息的简单文本协议; WebSocket是一个消息架构,不强制使用任何特定的消息协议,它依赖于应用层解释消息的含义. 与HTTP不同,WebSocket是处在TCP上非常薄的一层,会将字节流转化为文本/二进制消息,因此,对于实际应用来说,WebSocket的通信形式层级过低,因此，可以在 WebSocket 之上使用STOMP协议，来为浏览器 和 server间的 通信增加适当的消息语义。</p>
-<h3 id="STOMP与WebSocket-的关系"><a href="#STOMP与WebSocket-的关系" class="headerlink" title="STOMP与WebSocket 的关系:"></a>STOMP与WebSocket 的关系:</h3><ul>
-<li>HTTP协议解决了web浏览器发起请求以及web服务器响应请求的细节,假设HTTP协议不存在,只能使用TCP套接字来编写web应用,你可能认为这是一件疯狂的事情;</li>
-<li>直接使用WebSocket(SockJS)就很类似于使用TCP套接字来编写web应用,因为没有高层协议,就需要我们定义应用间发送消息的语义,还需要确保连接的两端都能遵循这些语义;</li>
-<li>同HTTP在TCP套接字上添加请求-响应模型层一样,STOMP在WebSocket之上提供了一个基于帧的线路格式层,用来定义消息语义.<br>-</li>
+<p>使用服务端渲染的网站，可以说是“所见即所得”，页面上呈现的内容，我们在 html 源文件里也能找到。</p>
+<h3 id="浏览器内核"><a href="#浏览器内核" class="headerlink" title="浏览器内核"></a>浏览器内核</h3><blockquote>
+<p>浏览器内核可以分成两部分：渲染引擎（Layout Engine 或者 Rendering Engine）和 JS 引擎。早期渲染引擎和 JS 引擎并没有十分明确的区分，但随着 JS 引擎越来越独立，内核也成了渲染引擎的代称（下文我们将沿用这种叫法）。渲染引擎又包括了 HTML 解释器、CSS 解释器、布局、网络、存储、图形、音视频、图片解码器等等零部件。</p>
+</blockquote>
+<p>目前市面上常见的浏览器内核可以分为这四种：Trident（IE）、Gecko（火狐）、Blink（Chrome、Opera）、Webkit（Safari）。</p>
+<p>这里面大家最耳熟能详的可能就是 Webkit 内核了。很多同学可能会听说过 Chrome 的内核就是 Webkit，殊不知 Chrome 内核早已迭代为了 Blink。但是换汤不换药，Blink 其实也是基于 Webkit 衍生而来的一个分支，因此，Webkit 内核仍然是当下浏览器世界真正的霸主。</p>
+<h3 id="渲染过程"><a href="#渲染过程" class="headerlink" title="渲染过程"></a>渲染过程</h3><ul>
+<li>HTML 解释器：将 HTML 文档经过词法分析输出 DOM 树。</li>
+<li></li>
+<li>CSS 解释器：解析 CSS 文档, 生成样式规则。</li>
+<li></li>
+<li>图层布局计算模块：布局计算每个对象的精确位置和大小。</li>
+<li></li>
+<li>视图绘制模块：进行具体节点的图像绘制，将像素渲染到屏幕上。</li>
+<li></li>
+<li>JavaScript 引擎：编译执行 Javascript 代码。</li>
 </ul>
-<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><blockquote>
-<p>代码中除了最基本的连接,还设置了一个定时器,每隔十秒发送一条数据到服务器端,如果发生错误,catch这个错误,重新建立连接.</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">// 安装并引入相关模块</span><br><span class="line">import SockJS from &apos;sockjs-client&apos;;</span><br><span class="line">import Stomp from &apos;stompjs&apos;;</span><br><span class="line">export default &#123;</span><br><span class="line"> data() &#123;</span><br><span class="line">  return &#123;</span><br><span class="line">  dataList: []</span><br><span class="line">  &#125;;</span><br><span class="line"> &#125;,</span><br><span class="line"> mounted:function()&#123;</span><br><span class="line">  this.initWebSocket();</span><br><span class="line"> &#125;,</span><br><span class="line"> beforeDestroy: function () &#123;</span><br><span class="line">  // 页面离开时断开连接,清除定时器</span><br><span class="line">  this.disconnect();</span><br><span class="line">  clearInterval(this.timer);</span><br><span class="line"> &#125;,</span><br><span class="line"> methods: &#123;</span><br><span class="line">  initWebSocket() &#123;</span><br><span class="line">  this.connection();</span><br><span class="line">  let self = this;</span><br><span class="line">  // 断开重连机制,尝试发送消息,捕获异常发生时重连</span><br><span class="line">  this.timer = setInterval(() =&gt; &#123;</span><br><span class="line">   try &#123;</span><br><span class="line">   self.stompClient.send(&quot;test&quot;);</span><br><span class="line">   &#125; catch (err) &#123;</span><br><span class="line">   console.log(&quot;断线了: &quot; + err);</span><br><span class="line">   self.connection();</span><br><span class="line">   &#125;</span><br><span class="line">  &#125;, 5000);</span><br><span class="line">  &#125;,</span><br><span class="line">  removeTab(targetName) &#123;</span><br><span class="line">  console.log(targetName)</span><br><span class="line">  &#125;,</span><br><span class="line">  connection() &#123;</span><br><span class="line">  // 建立连接对象</span><br><span class="line">  this.socket = new SockJS(&apos;http://xxxxxx:8089/ws&apos;);//连接服务端提供的通信接口，连接以后才可以订阅广播消息和个人消息</span><br><span class="line">  // 获取STOMP子协议的客户端对象</span><br><span class="line">  this.stompClient = Stomp.over(this.socket);</span><br><span class="line">  // 定义客户端的认证信息,按需求配置</span><br><span class="line">  var headers = &#123;</span><br><span class="line">   login: &apos;mylogin&apos;,</span><br><span class="line">   passcode: &apos;mypasscode&apos;,</span><br><span class="line">   // additional header</span><br><span class="line">   &apos;client-id&apos;: &apos;my-client-id&apos;</span><br><span class="line">  &#125;;</span><br><span class="line">  // 向服务器发起websocket连接</span><br><span class="line">  this.stompClient.connect(headers,(frame) =&gt; &#123;</span><br><span class="line">   this.stompClient.subscribe(&apos;/topic/chat_msg&apos;, (msg) =&gt; &#123; // 订阅服务端提供的某个topic</span><br><span class="line">   consolel.log(msg.body); // msg.body存放的是服务端发送给我们的信息</span><br><span class="line">   &#125;);</span><br><span class="line">  &#125;, (err) =&gt; &#123;</span><br><span class="line"></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  &#125;,</span><br><span class="line">  disconnect() &#123;</span><br><span class="line">  if (this.stompClient != null) &#123;</span><br><span class="line">   this.stompClient.disconnect();</span><br><span class="line">   console.log(&quot;Disconnected&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><p>websocket的实现有很多种，不过这个插件相对兼容性大些。<br>以上就是vue中使用SockJS实现webSocket通信的过程，希望对大家有帮助。</p>
+<h3 id="浏览器渲染过程解析"><a href="#浏览器渲染过程解析" class="headerlink" title="浏览器渲染过程解析"></a>浏览器渲染过程解析</h3><ul>
+<li>解析 HTML</li>
+</ul>
+<p>在这一步浏览器执行了所有的加载解析逻辑，在解析 HTML 的过程中发出了页面渲染所需的各种外部资源请求。</p>
+<ul>
+<li>计算样式</li>
+</ul>
+<p>浏览器将识别并加载所有的 CSS 样式信息与 DOM 树合并，最终生成页面 render 树（:after :before 这样的伪元素会在这个环节被构建到 DOM 树中）。</p>
+<ul>
+<li>计算图层布局</li>
+</ul>
+<p>页面中所有元素的相对位置信息，大小等信息均在这一步得到计算。</p>
+<ul>
+<li>绘制图层</li>
+</ul>
+<p>在这一步中浏览器会根据我们的 DOM 代码结果，把每一个页面图层转换为像素，并对所有的媒体文件进行解码。</p>
+<ul>
+<li>整合图层，得到页面</li>
+</ul>
+<p>最后一步浏览器会合并合各个图层，将数据由 CPU 输出给 GPU 最终绘制在屏幕上。（复杂的视图层会给这个阶段的 GPU 计算带来一些压力，在实际应用中为了优化动画性能，我们有时会手动区分不同的图层）。</p>
+<p>渲染过程说白了，首先是基于 HTML 构建一个 DOM 树，这棵 DOM 树与 CSS 解释器解析出的 CSSOM 相结合，就有了布局渲染树。最后浏览器以布局渲染树为蓝本，去计算布局并绘制图像，我们页面的初次渲染就大功告成了。</p>
+<h3 id="Event-Loop-中的“渲染时机”"><a href="#Event-Loop-中的“渲染时机”" class="headerlink" title="Event Loop 中的“渲染时机”"></a>Event Loop 中的“渲染时机”</h3><ul>
+<li>宏任务：包括整体代码script，setTimeout，setInterval</li>
+<li>微任务：Promise.then(非new Promise)，process.nextTick(node中)</li>
+<li>事件的执行顺序，是先执行宏任务，然后执行微任务，这个是基础，任务可以有同步任务和异步任务，同步的进入主线程，异步的进入Event Table并注册函数，异步事件完成后，会将回调函数放入Event Queue中(宏任务和微任务是不同的Event Queue)，同步任务执行完成后，会从Event Queue中读取事件放入主线程执行，回调函数中可能还会包含不同的任务，因此会循环执行上述操作。</li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(() =&gt; &#123;</span><br><span class="line">    console.log(&apos;延时1秒&apos;);</span><br><span class="line">&#125;,1000)</span><br><span class="line">console.log(&quot;开始&quot;)</span><br><span class="line">输出：</span><br><span class="line">开始</span><br><span class="line">延时1秒</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>上述代码，setTimeout函数是宏任务，且是异步任务，因此会将函数放入Event Table并注册函数，经过指定时间后，把要执行的任务加入到Event Queue中，等待同步任务console.log(“开始”)执行结束后，读取Event Queue中setTimeout的回调函数执行。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/10/1/1662ff57ebe7a73f?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="image"></p>
 
         </div>
 
         
             <div class="article-tags tags">
                 
-                    <a href="/tags/websocket/"><i class="fa fa-tag fa-fw" aria-hidden="true"></i>&nbsp;websocket</a>
-                
-                    <a href="/tags/sockJs/"><i class="fa fa-tag fa-fw" aria-hidden="true"></i>&nbsp;sockJs</a>
+                    <a href="/tags/前端优化/"><i class="fa fa-tag fa-fw" aria-hidden="true"></i>&nbsp;前端优化</a>
                 
             </div>
         
@@ -207,39 +225,21 @@
         
             <div class="prev-next">
                 
-                    <section class="prev" >
-                        <span class="art-item-left">
-                            <h6><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;上一篇</h6>
+                
+                    <section class="next">
+                        <span class="art-item-right" aria-hidden="true">
+                            <h6>下一篇&nbsp;<i class="fa fa-chevron-right" aria-hidden="true"></i></h6>
                             <h4>
-                                <a href="/2018/10/10/documentFragment对象/" rel="prev" title="documentFragment对象">
-                                  
-                                      documentFragment对象
-                                  
+                                <a href="/2019/01/05/vue常用插件/" rel="prev" title="vue常用插件">
+                                    
+                                        vue常用插件
+                                    
                                 </a>
                             </h4>
                             
                                 <h6 class="tags">
                                     
                                         <i class="fa fa-tag fa-fw"></i>js
-                                    
-                                </h6>
-                            
-                        </span>
-                    </section>
-                
-                
-                    <section class="next">
-                        <span class="art-item-right" aria-hidden="true">
-                            <h6>下一篇&nbsp;<i class="fa fa-chevron-right" aria-hidden="true"></i></h6>
-                            <h4>
-                                <a href="/2018/10/08/vue中slot的使用/" rel="prev" title="vue中slot的使用">
-                                    
-                                        vue中slot的使用
-                                    
-                                </a>
-                            </h4>
-                            
-                                <h6 class="tags">
                                     
                                         <i class="fa fa-tag fa-fw"></i>vue
                                     
@@ -269,15 +269,15 @@
         <h4><i class="fa fa-bookmark fa-fw" aria-hidden="true"></i>&nbsp;你可能感兴趣的文章</h4>
         <ul>
             
-                <li><a href="http://yoursite.com/2018/10/11/module替代scopet/">module替代scopet</a></li>
+                <li><a href="http://yoursite.com/2019/01/05/vue常用插件/">vue常用插件</a></li>
             
-                <li><a href="http://yoursite.com/2018/10/10/documentFragment对象/">documentFragment对象</a></li>
+                <li><a href="http://yoursite.com/2018/12/08/filter、map、some、every等常用js数组方法/">filter、map、some、every等常用js数组方法</a></li>
             
-                <li><a href="http://yoursite.com/2018/10/08/vue中slot的使用/">vue中slot的使用</a></li>
+                <li><a href="http://yoursite.com/2018/11/21/vue实现最多选择N个选项的方法/">vue实现最多选择N个选项的方法</a></li>
             
-                <li><a href="http://yoursite.com/2018/10/07/css编码规范/">css编码规范</a></li>
+                <li><a href="http://yoursite.com/2018/10/27/前端性能优化-上/">前端性能优化(上)</a></li>
             
-                <li><a href="http://yoursite.com/2018/09/30/常用js/">常用JS函数，方法举例</a></li>
+                <li><a href="http://yoursite.com/2018/10/19/主流浏览器图片反防盗链方法总结/">主流浏览器图片反防盗链方法总结</a></li>
             
         </ul>
     </div>
@@ -301,7 +301,7 @@
 
 <script>
     window.subData = {
-        title: '在vue中使用SockJS实现webSocket长连接通信的过程',
+        title: '前端性能优化（中）',
         tools: true
     }
 </script>
@@ -459,7 +459,7 @@
     <section class='m_widget toc-wrapper'>
         <div class="header"><i class="fa fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;目录</div>
         <div class='content'>
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#socksjs"><span class="toc-text">socksjs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前提"><span class="toc-text">前提</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于实时通信"><span class="toc-text">关于实时通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sockjs-client"><span class="toc-text">sockjs-client</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stomjs"><span class="toc-text">stomjs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#STOMP与WebSocket-的关系"><span class="toc-text">STOMP与WebSocket 的关系:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#代码实现"><span class="toc-text">代码实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#总结："><span class="toc-text">总结：</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#客户端渲染"><span class="toc-text">客户端渲染</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务端渲染"><span class="toc-text">服务端渲染</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#浏览器内核"><span class="toc-text">浏览器内核</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#渲染过程"><span class="toc-text">渲染过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#浏览器渲染过程解析"><span class="toc-text">浏览器渲染过程解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Event-Loop-中的“渲染时机”"><span class="toc-text">Event Loop 中的“渲染时机”</span></a></li></ol>
         </div>
     </section>
 
