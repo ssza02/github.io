@@ -160,16 +160,31 @@
         
     
     <div class='cats'>
-        
+        <a href="/categories/前端优化/">前端优化</a>
     </div>
 
 
     </section>
 
     <section class="article typo">
-        
+        <h3 id="优化首屏体验–lazy-load"><a href="#优化首屏体验–lazy-load" class="headerlink" title="优化首屏体验–lazy load"></a>优化首屏体验–lazy load</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">    // 获取所有的图片标签</span><br><span class="line">    const imgs = document.getElementsByTagName(&apos;img&apos;)</span><br><span class="line">    // 获取可视区域的高度</span><br><span class="line">    const viewHeight = window.innerHeight || document.documentElement.clientHeight</span><br><span class="line">    // num用于统计当前显示到了哪一张图片，避免每次都从第一张图片开始检查是否露出</span><br><span class="line">    let num = 0</span><br><span class="line">    function lazyload()&#123;</span><br><span class="line">        for(let i=num; i&lt;imgs.length; i++) &#123;</span><br><span class="line">            // 用可视区域高度减去元素顶部距离可视区域顶部的高度</span><br><span class="line">            let distance = viewHeight - imgs[i].getBoundingClientRect().top</span><br><span class="line">            // 如果可视区域高度大于等于元素顶部距离可视区域顶部的高度，说明元素露出</span><br><span class="line">            if(distance &gt;= 0 )&#123;</span><br><span class="line">                // 给元素写入真实的src，展示图片</span><br><span class="line">                imgs[i].src = imgs[i].getAttribute(&apos;data-src&apos;)</span><br><span class="line">                // 前i张图片已经加载完毕，下次从第i+1张开始检查是否露出</span><br><span class="line">                num = i + 1</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    // 监听Scroll事件</span><br><span class="line">    window.addEventListener(&apos;scroll&apos;, lazyload, false);</span><br><span class="line">&lt;/script&gt;...</span><br><span class="line"></span><br><span class="line">https://juejin.im</span><br><span class="line">掘金 — 一个帮助开发者成长的社区</span><br></pre></td></tr></table></figure>
+<h3 id="事件截流与防抖"><a href="#事件截流与防抖" class="headerlink" title="事件截流与防抖"></a>事件截流与防抖</h3><ul>
+<li>Throttle： 第一个人说了算</li>
+<li>Debounce： 最后一个人说了算</li>
+</ul>
+<blockquote>
+<p>我们对比 throttle 来理解 debounce：在throttle的逻辑里，“第一个人说了算”，它只为第一个乘客计时，时间到了就执行回调。而 debounce 认为，“最后一个人说了算”，debounce 会为每一个新乘客设定新的定时器。</p>
+</blockquote>
+<p>==debounce 强制函数在某段时间内只执行一次，throttle 强制函数以固定的速率执行。在处理一些高频率触发的 DOM 事件的时候，它们都能极大提高用户体验。==</p>
+
         
 
+        
+            <div class="full-width auto-padding tags">
+                
+                    <a href="/tags/前端优化/"><i class="fa fa-tag fa-fw"></i>&nbsp;前端优化</a>
+                
+            </div>
         
     </section>
 </article>
@@ -378,7 +393,7 @@
                 
                     <li><a class="flat-box" href="/categories/websocket/"><div class='name'>websocket</div><div class='badge'>1</div></a></li>
                 
-                    <li><a class="flat-box" href="/categories/前端优化/"><div class='name'>前端优化</div><div class='badge'>2</div></a></li>
+                    <li><a class="flat-box" href="/categories/前端优化/"><div class='name'>前端优化</div><div class='badge'>3</div></a></li>
                 
                     <li><a class="flat-box" href="/categories/前端安全/"><div class='name'>前端安全</div><div class='badge'>1</div></a></li>
                 
@@ -393,7 +408,7 @@
     <section class='m_widget tagcloud'>
         <div class="header"><i class="fa fa-tags fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;标签</div>
         <div class='content'>
-            <a href="/tags/css/" style="font-size: 19px; color: #777">css</a> <a href="/tags/js/" style="font-size: 24px; color: #555">js</a> <a href="/tags/sockJs/" style="font-size: 14px; color: #999">sockJs</a> <a href="/tags/vue/" style="font-size: 24px; color: #555">vue</a> <a href="/tags/websocket/" style="font-size: 14px; color: #999">websocket</a> <a href="/tags/前端优化/" style="font-size: 19px; color: #777">前端优化</a> <a href="/tags/前端安全/" style="font-size: 14px; color: #999">前端安全</a>
+            <a href="/tags/css/" style="font-size: 17.33px; color: #828282">css</a> <a href="/tags/js/" style="font-size: 24px; color: #555">js</a> <a href="/tags/sockJs/" style="font-size: 14px; color: #999">sockJs</a> <a href="/tags/vue/" style="font-size: 24px; color: #555">vue</a> <a href="/tags/websocket/" style="font-size: 14px; color: #999">websocket</a> <a href="/tags/前端优化/" style="font-size: 20.67px; color: #6c6c6c">前端优化</a> <a href="/tags/前端安全/" style="font-size: 14px; color: #999">前端安全</a>
         </div>
     </section>
 
